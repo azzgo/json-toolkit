@@ -1,35 +1,13 @@
 {
-  "name": "wxt-react-starter",
+  "name": "json-toolkit",
   "description": "manifest.json description",
   "private": true,
   "version": "0.0.0",
   "type": "module",
   "scripts": {
-    "dev": "wxt",
-    "dev:firefox": "wxt -b firefox",
-    "build": "wxt build",
-    "build:firefox": "wxt build -b firefox",
-    "zip": "wxt zip",
-    "zip:firefox": "wxt zip -b firefox",
-    "compile": "tsc --noEmit",
-    "postinstall": "wxt prepare"
+    "ext:dev": "bun --filter extension dev"
   },
-  "dependencies": {
-    "highlight.js": "^11.11.1",
-    "json-diff": "^1.0.6",
-    "json-to-ts": "^2.1.0",
-    "markdown-it": "^14.1.0",
-    "radash": "^12.1.0",
-    "react": "^19.0.0",
-    "react-dom": "^19.0.0",
-    "schema2dts": "^8.0.0",
-    "vanilla-jsoneditor": "^3.3.0"
-  },
-  "devDependencies": {
-    "@types/react": "^19.0.1",
-    "@types/react-dom": "^19.0.2",
-    "@wxt-dev/module-react": "^1.1.2",
-    "typescript": "^5.6.3",
-    "wxt": "^0.20.0"
-  }
+  "workspaces": [
+    "packages/*"
+  ]
 }
