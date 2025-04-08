@@ -1,10 +1,6 @@
 import { BrowserRouter as Router, Route, Routes } from "react-router";
-import "./App.css";
-
-function JsonEditor() {
-  return <div>JSON Editor Page</div>;
-}
-
+import JsonEditor from './pages/JsonEditor';
+      
 function JsonDiff() {
   return <div>JSON Diff Page</div>;
 }

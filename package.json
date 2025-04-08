@@ -10,5 +10,8 @@
   },
   "workspaces": [
     "packages/*"
-  ]
+  ],
+  "dependencies": {
+    "vanilla-jsoneditor": "^3.3.1"
+  }
 }
