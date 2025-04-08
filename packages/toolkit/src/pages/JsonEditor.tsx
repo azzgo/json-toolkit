@@ -1,5 +1,6 @@
 import { useEffect, useRef } from "react";
 import { createJSONEditor } from "vanilla-jsoneditor";
+import { Button } from "@/components/ui/button";
 
 function JsonEditor() {
   const editorRef = useRef(null);
@@ -31,7 +32,15 @@ function JsonEditor() {
     };
   }, []);
 
-  return <div className="w-screen h-screen" ref={editorRef}></div>;
+  return (
+    <div className="w-screen h-screen flex flex-col">
+      <div className="flex justify-start p-2 space-x-2">
+        <Button>JSON to Typescript Type</Button>
+        <Button>JSON Schema to Typescript Type</Button>
+      </div>
+      <div className="flex-1" ref={editorRef}></div>
+    </div>
+  );
 }
 
 export default JsonEditor;
