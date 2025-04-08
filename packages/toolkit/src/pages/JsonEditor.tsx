@@ -13,7 +13,7 @@ function JsonEditor() {
         onChange: (
           updatedContent: any,
           previousContent: any,
-          { contentErrors, patchResult }: any,
+          { contentErrors, patchResult }: any
         ) => {
           // content is an object { json: unknown } | { text: string }
           console.log("onChange", {
@@ -31,7 +31,7 @@ function JsonEditor() {
     };
   }, []);
 
-    return <div className="w-screen h-screen" ref={editorRef}></div>;
+  return <div className="w-screen h-screen" ref={editorRef}></div>;
 }
 
 export default JsonEditor;
