@@ -5,7 +5,8 @@
   "version": "0.0.0",
   "type": "module",
   "scripts": {
-    "ext:dev": "bun --filter extension dev"
+    "ext:dev": "bun --filter extension dev",
+    "toolkit:dev": "bun --filter toolkit dev"
   },
   "workspaces": [
     "packages/*"
