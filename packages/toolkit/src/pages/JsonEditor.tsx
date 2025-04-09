@@ -7,6 +7,7 @@ import hljs from "highlight.js";
 import "highlight.js/styles/github.css";
 import { parseJSON } from "@/lib/utils";
 import { DialogComponent } from "./DialogComponent";
+import { toast } from "sonner";
 
 type Editor = ReturnType<typeof createJSONEditor>;
 
@@ -64,6 +65,7 @@ function JsonEditor() {
       }
 
       if (!json) {
+        toast.error("Invalid JSON");
         return;
       }
 
