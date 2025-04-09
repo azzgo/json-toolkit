@@ -8,6 +8,7 @@ import "highlight.js/styles/github.css";
 import { parseJSON } from "@/lib/utils";
 import { DialogComponent } from "./DialogComponent";
 import { toast } from "sonner";
+import { CodeXmlIcon, FileJson } from "lucide-react";
 
 type Editor = ReturnType<typeof createJSONEditor>;
 
@@ -79,8 +80,18 @@ function JsonEditor() {
   return (
     <div className="w-screen h-screen flex flex-col">
       <div className="flex justify-start p-2 space-x-2">
-        <Button onClick={handleJsonToTs}>JSON to Typescript Type</Button>
-        <Button>JSON Schema to Typescript Type</Button>
+        <Button
+          variant="outline"
+          className="cursor-pointer"
+          onClick={handleJsonToTs}
+        >
+          <CodeXmlIcon className="size-4" />
+          JSON to Typescript Type
+        </Button>
+        <Button className="cursor-pointer">
+          <FileJson className="size-4" />
+          JSON Schema to Typescript Type
+        </Button>
       </div>
       <div className="flex-1" ref={editorDomRef}></div>
       <DialogComponent
