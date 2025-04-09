@@ -1,19 +1,12 @@
 import { useEffect, useRef, useState } from "react";
 import { createJSONEditor } from "vanilla-jsoneditor";
 import { Button } from "@/components/ui/button";
-import {
-  Dialog,
-  DialogContent,
-  DialogDescription,
-  DialogHeader,
-  DialogTitle,
-  DialogTrigger,
-} from "@/components/ui/dialog";
 import JsonToTS from "json-to-ts";
 import markdownit from "markdown-it";
 import hljs from "highlight.js";
 import "highlight.js/styles/github.css";
 import { parseJSON } from "@/lib/utils";
+import { DialogComponent } from "./DialogComponent";
 
 type Editor = ReturnType<typeof createJSONEditor>;
 
@@ -24,7 +17,6 @@ const md = markdownit({
         return hljs.highlight(str, { language: lang }).value;
       } catch (__) {}
     }
-
     return ""; // use external default escaping
   },
 });
@@ -82,15 +74,6 @@ function JsonEditor() {
     }
   };
 
-  const handleCopyToClipboard = () => {
-    const el = document.createElement("textarea");
-    el.value = tsType;
-    el.select();
-    document.body.appendChild(el);
-    document.execCommand("copy");
-    document.body.removeChild(el);
-  };
-
   return (
     <div className="w-screen h-screen flex flex-col">
       <div className="flex justify-start p-2 space-x-2">
@@ -98,20 +81,11 @@ function JsonEditor() {
         <Button>JSON Schema to Typescript Type</Button>
       </div>
       <div className="flex-1" ref={editorDomRef}></div>
-      <Dialog open={dialogOpen} onOpenChange={setDialogOpen}>
-        <DialogContent>
-          <DialogHeader>
-            <DialogTitle>Typescript Type</DialogTitle>
-            <DialogDescription>
-              <div dangerouslySetInnerHTML={{ __html: tsType }} />
-            </DialogDescription>
-          </DialogHeader>
-          <div className="flex justify-end space-x-2">
-            <Button onClick={handleCopyToClipboard}>Copy</Button>
-            <Button onClick={() => setDialogOpen(false)}>Close</Button>
-          </div>
-        </DialogContent>
-      </Dialog>
+      <DialogComponent
+        open={dialogOpen}
+        onOpenChange={() => setDialogOpen(false)}
+        tsType={tsType}
+      />
     </div>
   );
 }
