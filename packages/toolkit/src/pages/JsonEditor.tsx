@@ -108,7 +108,7 @@ function JsonEditor() {
           JSON Schema to Typescript Type
         </Button>
       </div>
-      <div className="flex-1" ref={editorDomRef}></div>
+      <div className="flex-1 m-2" ref={editorDomRef}></div>
       <DialogComponent
         open={dialogOpen}
         onOpenChange={() => setDialogOpen(false)}
