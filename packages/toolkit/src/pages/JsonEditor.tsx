@@ -34,19 +34,7 @@ function JsonEditor() {
     editorRef.current = createJSONEditor({
       target: editorDomRef.current,
       props: {
-        mode: "text",
-        onChange: (
-          updatedContent: any,
-          previousContent: any,
-          { contentErrors, patchResult }: any
-        ) => {
-          console.log("onChange", {
-            updatedContent,
-            previousContent,
-            contentErrors,
-            patchResult,
-          });
-        },
+        mode: "text"
       },
     });
 
