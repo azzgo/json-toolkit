@@ -9,6 +9,7 @@ import { parseJSON } from "@/lib/utils";
 import { DialogComponent } from "./DialogComponent";
 import { toast } from "sonner";
 import { CodeXmlIcon, FileJson } from "lucide-react";
+import { generateJSONSchemaTypes, toSource } from "schema2dts";
 
 type Editor = ReturnType<typeof createJSONEditor>;
 
@@ -34,7 +35,7 @@ function JsonEditor() {
     editorRef.current = createJSONEditor({
       target: editorDomRef.current,
       props: {
-        mode: "text"
+        mode: "text",
       },
     });
 
@@ -64,6 +65,31 @@ function JsonEditor() {
       setDialogOpen(true);
     }
   };
+  const handleJsonSchemaToTs = async () => {
+    if (editorRef.current) {
+      const content = editorRef.current.get();
+      let schema;
+      if (content.json) {
+        schema = content.json;
+      } else if (content.text) {
+        schema = parseJSON(content.text);
+      }
+
+      if (!schema) {
+        toast.error("Invalid JSON Schema");
+        return;
+      }
+
+      try {
+        const tsTypes = toSource(await generateJSONSchemaTypes(schema));
+        const rendered = md.render(`\`\`\`typescript\n${tsTypes}\n\`\`\``);
+        setTsType(rendered);
+        setDialogOpen(true);
+      } catch (error) {
+        toast.error("Invalid JSON Schema");
+      }
+    }
+  };
 
   return (
     <div className="w-screen h-screen flex flex-col">
@@ -76,7 +102,8 @@ function JsonEditor() {
           <CodeXmlIcon className="size-4" />
           JSON to Typescript Type
         </Button>
-        <Button className="cursor-pointer">
+
+        <Button className="cursor-pointer" onClick={handleJsonSchemaToTs}>
           <FileJson className="size-4" />
           JSON Schema to Typescript Type
         </Button>
