@@ -1,7 +1,7 @@
-
 import { useEffect, useRef } from "react";
 import { createJSONEditor } from "vanilla-jsoneditor";
 import { Button } from "@/components/ui/button";
+import { ChevronsLeftRight, ChevronsRightLeft } from "lucide-react";
 
 function JsonDiff() {
   const leftEditorDomRef = useRef(null);
@@ -40,18 +40,21 @@ function JsonDiff() {
   };
 
   return (
-    <div className="w-full flex-1 flex flex-col space-y-4">
+    <div className="w-full flex-1 flex flex-col space-y-4 p-2">
       <div className="flex space-x-2">
-        <Button onClick={swapContent}>Swap Content</Button>
-        <Button onClick={() => alert("Diff feature coming soon!")}>Show Diff</Button>
+        <Button onClick={() => alert("Diff feature coming soon!")}>
+          Show Diff
+        </Button>
       </div>
-      <div className="flex space-x-4 flex-1">
-        <div className="flex-1 border p-2" ref={leftEditorDomRef}></div>
-        <div className="flex-1 border p-2" ref={rightEditorDomRef}></div>
+      <div className="flex space-x-4 flex-1 items-center">
+        <div className="flex-1 h-full border" ref={leftEditorDomRef}></div>
+        <Button variant="outline" onClick={swapContent} className="cursor-pointer">
+          <ChevronsLeftRight className="size-4" />
+        </Button>
+        <div className="flex-1 h-full border" ref={rightEditorDomRef}></div>
       </div>
     </div>
   );
 }
 
 export default JsonDiff;
-
