@@ -1,17 +1,19 @@
 import { useEffect, useRef, useState } from "react";
-import { createJSONEditor } from "vanilla-jsoneditor";
+import {
+  JSONSchema,
+  createJSONEditor,
+} from "vanilla-jsoneditor";
 import { Button } from "@/components/ui/button";
 import JsonToTS from "json-to-ts";
 import markdownit from "markdown-it";
 import hljs from "highlight.js";
 import "highlight.js/styles/github.css";
-import { parseJSON } from "@/lib/utils";
+import { getEditorContentJson } from "@/lib/utils";
 import { DialogComponent } from "./DialogComponent";
 import { toast } from "sonner";
 import { CodeXmlIcon, FileJson } from "lucide-react";
 import { generateJSONSchemaTypes, toSource } from "schema2dts";
-
-type Editor = ReturnType<typeof createJSONEditor>;
+import { Editor } from "@/lib/types";
 
 const md = markdownit({
   highlight: function (str: string, lang: string) {
@@ -47,12 +49,7 @@ function JsonEditor() {
   const handleJsonToTs = () => {
     if (editorRef.current) {
       const content = editorRef.current.get();
-      let json;
-      if (content.json) {
-        json = content.json;
-      } else if (content.text) {
-        json = parseJSON(content.text);
-      }
+      let json = getEditorContentJson(content);
 
       if (!json) {
         toast.error("Invalid JSON");
@@ -68,20 +65,16 @@ function JsonEditor() {
   const handleJsonSchemaToTs = async () => {
     if (editorRef.current) {
       const content = editorRef.current.get();
-      let schema;
-      if (content.json) {
-        schema = content.json;
-      } else if (content.text) {
-        schema = parseJSON(content.text);
-      }
-
+      let schema = getEditorContentJson(content);
       if (!schema) {
         toast.error("Invalid JSON Schema");
         return;
       }
 
       try {
-        const tsTypes = toSource(await generateJSONSchemaTypes(schema));
+        const tsTypes = toSource(
+          await generateJSONSchemaTypes(schema as JSONSchema)
+        );
         const rendered = md.render(`\`\`\`typescript\n${tsTypes}\n\`\`\``);
         setTsType(rendered);
         setDialogOpen(true);

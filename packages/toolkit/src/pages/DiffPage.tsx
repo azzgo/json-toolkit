@@ -1,13 +1,14 @@
 import { useEffect, useRef } from "react";
 import { createJSONEditor } from "vanilla-jsoneditor";
 import { Button } from "@/components/ui/button";
-import { ChevronsLeftRight, ChevronsRightLeft } from "lucide-react";
+import { ChevronsLeftRight } from "lucide-react";
+import {Editor} from "@/lib/types";
 
 function JsonDiff() {
   const leftEditorDomRef = useRef(null);
   const rightEditorDomRef = useRef(null);
-  const leftEditorRef = useRef(null);
-  const rightEditorRef = useRef(null);
+  const leftEditorRef = useRef<Editor | null>(null);
+  const rightEditorRef = useRef<Editor | null>(null);
 
   useEffect(() => {
     if (leftEditorDomRef.current) {
