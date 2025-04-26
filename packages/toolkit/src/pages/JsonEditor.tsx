@@ -92,7 +92,7 @@ function JsonEditor() {
   };
 
   return (
-    <div className="w-screen h-screen flex flex-col">
+    <div className="w-full flex-1 flex flex-col">
       <div className="flex justify-start p-2 space-x-2">
         <Button
           variant="outline"
