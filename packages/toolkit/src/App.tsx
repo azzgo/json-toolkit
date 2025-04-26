@@ -9,15 +9,15 @@ function JsonDiff() {
 
 function App() {
   return (
-    <Layout>
-      <Router>
+    <Router>
+      <Layout>
         <Routes>
           <Route path="/" element={<JsonEditor />} />
           <Route path="/diff" element={<JsonDiff />} />
         </Routes>
-      </Router>
-      <Toaster position="top-right" />
-    </Layout>
+        <Toaster position="top-right" />
+      </Layout>
+    </Router>
   );
 }
 

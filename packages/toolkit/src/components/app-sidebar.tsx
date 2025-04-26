@@ -1,4 +1,5 @@
-import { FileText, GitMerge } from "lucide-react";
+import { ChevronsLeftRight, ChevronsRightLeft, FileText, GitMerge } from "lucide-react";
+import { Link } from "react-router";
 
 import {
   Sidebar,
@@ -9,6 +10,9 @@ import {
   SidebarMenu,
   SidebarMenuButton,
   SidebarMenuItem,
+  SidebarFooter,
+  SidebarTrigger,
+  useSidebar,
 } from "@/components/ui/sidebar";
 
 const AppSidebar = () => {
@@ -25,8 +29,10 @@ const AppSidebar = () => {
     },
   ];
 
+  const { toggleSidebar, open } = useSidebar();
+
   return (
-    <Sidebar>
+    <Sidebar collapsible="icon">
       <SidebarContent>
         <SidebarGroup>
           <SidebarGroupLabel>Json Toolkit</SidebarGroupLabel>
@@ -35,10 +41,10 @@ const AppSidebar = () => {
               {items.map((item) => (
                 <SidebarMenuItem key={item.title}>
                   <SidebarMenuButton asChild>
-                    <a href={item.url}>
+                    <Link to={{ pathname: item.url }}>
                       <item.icon />
                       <span>{item.title}</span>
-                    </a>
+                    </Link>
                   </SidebarMenuButton>
                 </SidebarMenuItem>
               ))}
@@ -46,10 +52,18 @@ const AppSidebar = () => {
           </SidebarGroupContent>
         </SidebarGroup>
       </SidebarContent>
+      <SidebarFooter>
+        <SidebarMenu>
+          <SidebarMenuItem>
+            <SidebarMenuButton onClick={toggleSidebar}>
+              {open ? <ChevronsRightLeft /> : <ChevronsLeftRight />}
+              <span>Fold</span>
+            </SidebarMenuButton>
+          </SidebarMenuItem>
+        </SidebarMenu>
+      </SidebarFooter>
     </Sidebar>
   );
 };
 
 export default AppSidebar;
-      
-
