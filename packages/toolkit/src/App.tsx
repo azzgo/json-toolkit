@@ -2,10 +2,8 @@ import { BrowserRouter as Router, Route, Routes } from "react-router";
 import JsonEditor from "./pages/JsonEditor";
 import { Toaster } from "./components/ui/sonner";
 import Layout from "./components/layout";
+import JsonDiff from "./pages/DiffPage";
 
-function JsonDiff() {
-  return <div>JSON Diff Page</div>;
-}
 
 function App() {
   return (
