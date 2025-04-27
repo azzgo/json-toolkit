@@ -1,12 +1,16 @@
 import { useEffect, useRef } from "react";
-import { JSONEditorPropsOptional, Mode, createJSONEditor } from "vanilla-jsoneditor";
+import {
+  JSONEditorPropsOptional,
+  Mode,
+  createJSONEditor,
+} from "vanilla-jsoneditor";
 import { diff } from "json-diff";
 import { Button } from "@/components/ui/button";
 import { ChevronsLeftRight } from "lucide-react";
 import { Editor } from "@/lib/types";
 import { toast } from "sonner";
 import { getEditorContentJson } from "@/lib/utils";
-import { get } from 'radash';
+import { get } from "radash";
 
 function JsonDiff() {
   const leftEditorDomRef = useRef(null);
@@ -56,42 +60,92 @@ function JsonDiff() {
         const diffResult = diff(leftJSON, rightJSON);
 
         if (diffResult) {
-          const getClassName: JSONEditorPropsOptional['onClassName'] = (path) => {
-            const diffValue = get(diffResult, path.join('.'));
-            if (diffValue && typeof diffValue === "object") {
-              if ("__old" in diffValue && "__new" in diffValue) {
-                return "bg-yellow-100"; // Changed value
-              }
-              if (Array.isArray(diffValue) && ['+', '-', '~', ' '].includes(get(diffValue, '[0]'))) {
-                let diffType = get(diffValue, '[0]');
-                switch (diffType) {
-                  case '+':
-                    return "bg-green-100"; // Added value
-                  case '-':
-                    return "bg-red-100"; // Removed value
-                  case '~':
-                    return "bg-yellow-100"; // Changed value
-                  case ' ':
-                    return ""; // Unchanged value
-                  default:
-                    return "";
+          // onClassName for the left editor
+          const getLeftClassName: JSONEditorPropsOptional["onClassName"] = (
+            path,
+            value
+          ) => {
+            const diffValue = get(diffResult, path.join("."));
+
+            if (Array.isArray(diffValue)) {
+              const parentPath = path.slice(0, -1).join(".");
+              const arrayDiff = get(diffResult, parentPath);
+              if (Array.isArray(arrayDiff)) {
+                let leftArrayDiff = arrayDiff.filter((item) => item[0] !== "+");
+                const index = parseInt(path[path.length - 1], 10);
+                const tuple = leftArrayDiff[index];
+
+                if (Array.isArray(tuple) && tuple.length === 2) {
+                  const diffType = tuple[0];
+                  if (diffType === "-") return "bg-red-100"; // Removed value
+                  if (diffType === " ") return ""; // Unchanged value
                 }
               }
             }
-            let addedValue = get(diffResult, `${path.splice(0, path.length - 2).join('')}.${path[path.length - 1]}.__added}`);
-            if (addedValue) {
+            if (diffValue && typeof diffValue === "object") {
+              if ("__old" in diffValue && "__new" in diffValue) {
+                return "bg-blue-100"; // Changed value
+              }
+            }
+            let removedPath = [
+              ...path.slice(0, path.length - 2),
+              path[path.length - 1] + "__deleted",
+            ];
+            if (get(diffResult, removedPath.join("."))) {
+              return "bg-red-100";
+            }
+
+            return "";
+          };
+
+          // onClassName for the right editor
+          const getRightClassName: JSONEditorPropsOptional["onClassName"] = (
+            path,
+            value
+          ) => {
+            const diffValue = get(diffResult, path.join("."));
+
+            if (Array.isArray(diffValue)) {
+              const parentPath = path.slice(0, -1).join(".");
+              const arrayDiff = get(diffResult, parentPath);
+              if (Array.isArray(arrayDiff)) {
+                const index = parseInt(path[path.length - 1], 10);
+                let rightArrayDiff = arrayDiff.filter(
+                  (item) => item[0] !== "-"
+                );
+                const tuple = rightArrayDiff[index];
+
+                if (Array.isArray(tuple) && tuple.length === 2) {
+                  const diffType = tuple[0];
+                  if (diffType === "+") return "bg-green-100"; // Added value
+                  if (diffType === " ") return ""; // Unchanged value
+                }
+              }
+            }
+            if (diffValue && typeof diffValue === "object") {
+              if ("__old" in diffValue && "__new" in diffValue) {
+                return "bg-blue-100"; // Changed value
+              }
+            }
+            let addedPath = [
+              ...path.slice(0, path.length - 2),
+              path[path.length - 1] + "__added",
+            ];
+            if (get(diffResult, addedPath.join("."))) {
               return "bg-green-100";
             }
+
+            return "";
           };
 
           leftEditorRef.current.updateProps({
             mode: Mode.tree,
-            onClassName: getClassName,
+            onClassName: getLeftClassName,
           });
 
           rightEditorRef.current.updateProps({
             mode: Mode.tree,
-            onClassName: getClassName,
+            onClassName: getRightClassName,
           });
 
           leftEditorRef.current.refresh();
