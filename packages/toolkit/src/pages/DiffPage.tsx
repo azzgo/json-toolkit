@@ -1,11 +1,12 @@
 import { useEffect, useRef } from "react";
-import { Mode, createJSONEditor } from "vanilla-jsoneditor";
+import { JSONEditorPropsOptional, Mode, createJSONEditor } from "vanilla-jsoneditor";
 import { diff } from "json-diff";
 import { Button } from "@/components/ui/button";
 import { ChevronsLeftRight } from "lucide-react";
 import { Editor } from "@/lib/types";
 import { toast } from "sonner";
 import { getEditorContentJson } from "@/lib/utils";
+import { get } from 'radash';
 
 function JsonDiff() {
   const leftEditorDomRef = useRef(null);
@@ -55,19 +56,44 @@ function JsonDiff() {
         const diffResult = diff(leftJSON, rightJSON);
 
         if (diffResult) {
+          const getClassName: JSONEditorPropsOptional['onClassName'] = (path) => {
+            const diffValue = get(diffResult, path.join('.'));
+            if (diffValue && typeof diffValue === "object") {
+              if ("__old" in diffValue && "__new" in diffValue) {
+                return "bg-yellow-100"; // Changed value
+              }
+              if (Array.isArray(diffValue) && ['+', '-', '~', ' '].includes(get(diffValue, '[0]'))) {
+                let diffType = get(diffValue, '[0]');
+                switch (diffType) {
+                  case '+':
+                    return "bg-green-100"; // Added value
+                  case '-':
+                    return "bg-red-100"; // Removed value
+                  case '~':
+                    return "bg-yellow-100"; // Changed value
+                  case ' ':
+                    return ""; // Unchanged value
+                  default:
+                    return "";
+                }
+              }
+            }
+            let addedValue = get(diffResult, `${path.splice(0, path.length - 2).join('')}.${path[path.length - 1]}.__added}`);
+            if (addedValue) {
+              return "bg-green-100";
+            }
+          };
+
           leftEditorRef.current.updateProps({
             mode: Mode.tree,
-            onClassName: (path) => {
-              return diffResult[path as unknown as string] ? "bg-red-100" : "";
-            },
+            onClassName: getClassName,
           });
 
-          rightEditorRef.current.updateProps( {
+          rightEditorRef.current.updateProps({
             mode: Mode.tree,
-            onClassName: (path) => {
-              return diffResult[path as unknown as string] ? "bg-green-100" : "";
-            },
+            onClassName: getClassName,
           });
+
           leftEditorRef.current.refresh();
           rightEditorRef.current.refresh();
         } else {
