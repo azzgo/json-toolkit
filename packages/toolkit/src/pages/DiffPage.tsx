@@ -35,11 +35,11 @@ function JsonDiff() {
                 name: "alice",
                 gender: "female",
               },
-              e: [1, { code: "123", name: 'test' }],
+              e: [1, { code: "123", name: "test" }],
             },
           },
         },
-      })
+      });
     }
 
     if (rightEditorDomRef.current) {
@@ -55,7 +55,7 @@ function JsonDiff() {
               d: {
                 name: "bob",
               },
-              e: [1, { code: "123", name: 'prod' }],
+              e: [1, { code: "123", name: "prod" }],
             },
           },
         },
@@ -74,6 +74,14 @@ function JsonDiff() {
       const rightContent = rightEditorRef.current.get();
       leftEditorRef.current.update(rightContent);
       rightEditorRef.current.update(leftContent);
+      leftEditorRef.current.updateProps({
+        onClassName: null,
+      });
+      rightEditorRef.current.updateProps({
+        onClassName: null,
+      });
+      leftEditorRef.current.refresh();
+      rightEditorRef.current.refresh();
     }
   };
 
