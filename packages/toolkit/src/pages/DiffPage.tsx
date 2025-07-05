@@ -9,7 +9,10 @@ import { Button } from "@/components/ui/button";
 import { ChevronsLeftRight } from "lucide-react";
 import { Editor } from "@/lib/types";
 import { toast } from "sonner";
-import { getEditorContentJson } from "@/lib/utils";
+import {
+  convertDiffResultToJSONPathMap,
+  getEditorContentJson,
+} from "@/lib/utils";
 import { get } from "radash";
 
 function JsonDiff() {
@@ -22,14 +25,40 @@ function JsonDiff() {
     if (leftEditorDomRef.current) {
       leftEditorRef.current = createJSONEditor({
         target: leftEditorDomRef.current,
-        props: { mode: "text" },
-      });
+        props: {
+          mode: "text",
+          content: {
+            json: {
+              a: "123",
+              b: [1, 2, 5, ["a", "c"]],
+              d: {
+                name: "alice",
+                gender: "female",
+              },
+              e: [1, { code: "123", name: 'test' }],
+            },
+          },
+        },
+      })
     }
 
     if (rightEditorDomRef.current) {
       rightEditorRef.current = createJSONEditor({
         target: rightEditorDomRef.current,
-        props: { mode: "text" },
+        props: {
+          mode: "text",
+          content: {
+            json: {
+              a: "123",
+              b: [1, 2, 3, ["a", "b"]],
+              c: [],
+              d: {
+                name: "bob",
+              },
+              e: [1, { code: "123", name: 'prod' }],
+            },
+          },
+        },
       });
     }
 
@@ -58,98 +87,53 @@ function JsonDiff() {
         const rightJSON = getEditorContentJson(rightContent);
 
         const diffResult = diff(leftJSON, rightJSON);
+        const [leftDiffResultMap, rightDiffResultMap] =
+          convertDiffResultToJSONPathMap(diffResult);
 
         if (diffResult) {
           // onClassName for the left editor
           const getLeftClassName: JSONEditorPropsOptional["onClassName"] = (
             path,
-            value
+            value,
           ) => {
-            const diffValue = get(diffResult, path.join("."));
-
-            if (Array.isArray(diffValue)) {
-              const parentPath = path.slice(0, -1).join(".");
-              const arrayDiff = get(diffResult, parentPath);
-              if (Array.isArray(arrayDiff)) {
-                let leftArrayDiff = arrayDiff.filter((item) => item[0] !== "+");
-                const index = parseInt(path[path.length - 1], 10);
-                const tuple = leftArrayDiff[index];
-
-                if (Array.isArray(tuple) && tuple.length === 2) {
-                  const diffType = tuple[0];
-                  if (diffType === "-") return "bg-red-100"; // Removed value
-                  if (diffType === " ") return ""; // Unchanged value
-                }
-              }
-            }
-            if (diffValue && typeof diffValue === "object") {
-              if ("__old" in diffValue && "__new" in diffValue) {
-                return "bg-blue-100"; // Changed value
-              }
-            }
-            let removedPath = [
-              ...path.slice(0, path.length - 2),
-              path[path.length - 1] + "__deleted",
-            ];
-            if (get(diffResult, removedPath.join("."))) {
+            const diffValue = leftDiffResultMap.get(path.join("."));
+            if (diffValue === "delete") {
               return "bg-red-100";
+            } else if (diffValue === "update") {
+              return "bg-yellow-100";
             }
-
             return "";
           };
 
           // onClassName for the right editor
           const getRightClassName: JSONEditorPropsOptional["onClassName"] = (
             path,
-            value
+            value,
           ) => {
-            const diffValue = get(diffResult, path.join("."));
-
-            if (Array.isArray(diffValue)) {
-              const parentPath = path.slice(0, -1).join(".");
-              const arrayDiff = get(diffResult, parentPath);
-              if (Array.isArray(arrayDiff)) {
-                const index = parseInt(path[path.length - 1], 10);
-                let rightArrayDiff = arrayDiff.filter(
-                  (item) => item[0] !== "-"
-                );
-                const tuple = rightArrayDiff[index];
-
-                if (Array.isArray(tuple) && tuple.length === 2) {
-                  const diffType = tuple[0];
-                  if (diffType === "+") return "bg-green-100"; // Added value
-                  if (diffType === " ") return ""; // Unchanged value
-                }
-              }
-            }
-            if (diffValue && typeof diffValue === "object") {
-              if ("__old" in diffValue && "__new" in diffValue) {
-                return "bg-blue-100"; // Changed value
-              }
-            }
-            let addedPath = [
-              ...path.slice(0, path.length - 2),
-              path[path.length - 1] + "__added",
-            ];
-            if (get(diffResult, addedPath.join("."))) {
+            const diffValue = rightDiffResultMap.get(path.join("."));
+            if (diffValue === "add") {
               return "bg-green-100";
+            } else if (diffValue === "update") {
+              return "bg-yellow-100";
             }
-
             return "";
           };
 
-          leftEditorRef.current.updateProps({
-            mode: Mode.tree,
-            onClassName: getLeftClassName,
-          });
+          if (leftDiffResultMap.size > 0) {
+            leftEditorRef.current.updateProps({
+              mode: Mode.tree,
+              onClassName: getLeftClassName,
+            });
+            leftEditorRef.current.refresh();
+          }
 
-          rightEditorRef.current.updateProps({
-            mode: Mode.tree,
-            onClassName: getRightClassName,
-          });
-
-          leftEditorRef.current.refresh();
-          rightEditorRef.current.refresh();
+          if (rightDiffResultMap.size > 0) {
+            rightEditorRef.current.updateProps({
+              mode: Mode.tree,
+              onClassName: getRightClassName,
+            });
+            rightEditorRef.current.refresh();
+          }
         } else {
           toast.info("No differences found!");
         }
