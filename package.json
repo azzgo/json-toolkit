@@ -2,11 +2,14 @@
   "name": "json-toolkit",
   "description": "manifest.json description",
   "private": true,
-  "version": "0.0.0",
+  "version": "0.0.1",
   "type": "module",
   "scripts": {
-    "ext:dev": "bun --filter extension dev",
-    "toolkit:dev": "bun --filter toolkit dev"
+    "ext:dev": "bun --filter json-toolkit dev",
+    "ext:build:chrome": "bun --filter json-toolkit build:chrome",
+    "ext:build:firefox": "bun --filter json-toolkit build:firefox",
+    "toolkit:dev": "bun --filter toolkit dev",
+    "toolkit:build": "bun --filter toolkit build"
   },
   "workspaces": [
     "packages/*"

@@ -2,15 +2,17 @@
   "name": "json-toolkit",
   "description": "manifest.json description",
   "private": true,
-  "version": "0.0.0",
+  "version": "0.0.1",
   "type": "module",
   "scripts": {
     "dev": "wxt",
     "dev:firefox": "wxt -b firefox",
     "build": "wxt build",
     "build:firefox": "wxt build -b firefox",
+    "build:chrome": "wxt build -b chrome",
     "zip": "wxt zip",
     "zip:firefox": "wxt zip -b firefox",
+    "zip:chrome": "wxt zip -b chrome",
     "compile": "tsc --noEmit",
     "postinstall": "wxt prepare"
   },

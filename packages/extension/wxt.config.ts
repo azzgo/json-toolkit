@@ -1,11 +1,14 @@
 import { defineConfig } from "wxt";
 import tailwindcss from "@tailwindcss/vite";
+import packageJson from "./package.json";
+
 
 // See https://wxt.dev/api/config.html
 export default defineConfig({
   modules: ["@wxt-dev/module-react"],
   manifest: {
     name: "JSON Toolkit",
+    version: packageJson.version,
     action: { default_title: "JSON Toolkit" },
     icons: {
       "16": "icon@16px.png",
