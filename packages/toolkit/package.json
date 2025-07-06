@@ -5,7 +5,8 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "build": "tsc -b && vite build --outDir=../extension/public/toolkit",
+    "build": "tsc -b && vite build",
+    "build:extension": "BUILD_FOR_EXTENSION=1 vite build --emptyOutDir --outDir=../extension/public/toolkit",
     "lint": "eslint .",
     "preview": "vite preview"
   },

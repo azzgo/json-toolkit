@@ -1,7 +1,7 @@
 export default defineBackground(() => {
   browser.action.onClicked.addListener(() => {
     browser.tabs.create({
-      url: "toolkit.html",
+      url: "toolkit/index.html",
     });
   });
 });
