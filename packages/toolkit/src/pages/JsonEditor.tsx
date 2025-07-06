@@ -85,23 +85,28 @@ function JsonEditor() {
   };
 
   return (
-    <div className="w-full flex-1 flex flex-col">
-      <div className="flex justify-start p-2 space-x-2">
+    <div className="w-full flex-1 flex flex-col gap-4 p-4">
+      <div className="flex items-center gap-2">
         <Button
+          size="sm"
           variant="outline"
-          className="cursor-pointer"
           onClick={handleJsonToTs}
+          className="h-8 px-3 text-sm"
         >
-          <CodeXmlIcon className="size-4" />
-          JSON to Typescript Type
+          <CodeXmlIcon className="size-4 mr-2" />
+          JSON to Type
         </Button>
 
-        <Button className="cursor-pointer" onClick={handleJsonSchemaToTs}>
-          <FileJson className="size-4" />
-          JSON Schema to Typescript Type
+        <Button
+          size="sm"
+          onClick={handleJsonSchemaToTs}
+          className="h-8 px-3 text-sm"
+        >
+          <FileJson className="size-4 mr-2" />
+          Schema to Type
         </Button>
       </div>
-      <div className="flex-1 m-2" ref={editorDomRef}></div>
+      <div className="flex-1 rounded-lg border bg-card" ref={editorDomRef}></div>
       <DialogComponent
         open={dialogOpen}
         onOpenChange={() => setDialogOpen(false)}

@@ -27,17 +27,6 @@ function JsonDiff() {
         target: leftEditorDomRef.current,
         props: {
           mode: "text",
-          content: {
-            json: {
-              a: "123",
-              b: [1, 2, 5, ["a", "c"]],
-              d: {
-                name: "alice",
-                gender: "female",
-              },
-              e: [1, { code: "123", name: "test" }],
-            },
-          },
         },
       });
     }
@@ -47,17 +36,6 @@ function JsonDiff() {
         target: rightEditorDomRef.current,
         props: {
           mode: "text",
-          content: {
-            json: {
-              a: "123",
-              b: [1, 2, 3, ["a", "b"]],
-              c: [],
-              d: {
-                name: "bob",
-              },
-              e: [1, { code: "123", name: "prod" }],
-            },
-          },
         },
       });
     }
@@ -152,20 +130,24 @@ function JsonDiff() {
   };
 
   return (
-    <div className="w-full flex-1 flex flex-col space-y-4 p-2">
-      <div className="flex space-x-2">
-        <Button onClick={showDiff}>Show Diff</Button>
-      </div>
-      <div className="flex space-x-4 flex-1 items-center">
-        <div className="flex-1 h-full border" ref={leftEditorDomRef}></div>
+    <div className="w-full flex-1 flex flex-col gap-4 p-4">
+      <div className="flex items-center gap-2">
+        <Button size="sm" onClick={showDiff} className="h-8 px-3 text-sm">
+          Show Diff
+        </Button>
         <Button
+          size="sm"
           variant="outline"
           onClick={swapContent}
-          className="cursor-pointer"
+          className="h-8 w-8 p-0"
+          aria-label="Swap content"
         >
           <ChevronsLeftRight className="size-4" />
         </Button>
-        <div className="flex-1 h-full border" ref={rightEditorDomRef}></div>
+      </div>
+      <div className="flex gap-4 flex-1 items-stretch">
+        <div className="flex-1 rounded-lg border bg-card" ref={leftEditorDomRef}></div>
+        <div className="flex-1 rounded-lg border bg-card" ref={rightEditorDomRef}></div>
       </div>
     </div>
   );
