@@ -196,3 +196,6 @@
   }
 }
 
+.my-sidebar {
+  --sidebar-width: 8rem;
+}

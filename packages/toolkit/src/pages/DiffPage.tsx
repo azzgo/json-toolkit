@@ -13,7 +13,6 @@ import {
   convertDiffResultToJSONPathMap,
   getEditorContentJson,
 } from "@/lib/utils";
-import { get } from "radash";
 
 function JsonDiff() {
   const leftEditorDomRef = useRef(null);
@@ -53,10 +52,10 @@ function JsonDiff() {
       leftEditorRef.current.update(rightContent);
       rightEditorRef.current.update(leftContent);
       leftEditorRef.current.updateProps({
-        onClassName: null,
+        onClassName: undefined,
       });
       rightEditorRef.current.updateProps({
-        onClassName: null,
+        onClassName: undefined,
       });
       leftEditorRef.current.refresh();
       rightEditorRef.current.refresh();
@@ -80,7 +79,6 @@ function JsonDiff() {
           // onClassName for the left editor
           const getLeftClassName: JSONEditorPropsOptional["onClassName"] = (
             path,
-            value,
           ) => {
             const diffValue = leftDiffResultMap.get(path.join("."));
             if (diffValue === "delete") {
@@ -94,7 +92,6 @@ function JsonDiff() {
           // onClassName for the right editor
           const getRightClassName: JSONEditorPropsOptional["onClassName"] = (
             path,
-            value,
           ) => {
             const diffValue = rightDiffResultMap.get(path.join("."));
             if (diffValue === "add") {
@@ -123,7 +120,7 @@ function JsonDiff() {
         } else {
           toast.info("No differences found!");
         }
-      } catch (error) {
+      } catch (_error) {
         toast.error("Invalid JSON content in one or both editors.");
       }
     }

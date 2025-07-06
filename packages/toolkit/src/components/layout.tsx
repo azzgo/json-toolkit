@@ -1,4 +1,4 @@
-import { SidebarProvider, SidebarTrigger } from "@/components/ui/sidebar";
+import { SidebarProvider } from "@/components/ui/sidebar";
 import AppSidebar from "@/components/app-sidebar";
 
 export default function Layout({ children }: { children: React.ReactNode }) {
@@ -6,9 +6,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
     <div className="flex flex-col h-screen">
       <SidebarProvider
         defaultOpen={false}
-        style={{
-          "--sidebar-width": "8rem",
-        }}
+        className="my-sidebar"
       >
         <AppSidebar />
         <main className="flex-1 flex flex-col">{children}</main>

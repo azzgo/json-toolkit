@@ -9,7 +9,8 @@
     "ext:build:chrome": "bun --filter json-toolkit build:chrome",
     "ext:build:firefox": "bun --filter json-toolkit build:firefox",
     "toolkit:dev": "bun --filter toolkit dev",
-    "toolkit:build": "bun --filter toolkit build"
+    "toolkit:build": "bun --filter toolkit build",
+    "toolkit:build:extension": "bun --filter toolkit build:extension"
   },
   "workspaces": [
     "packages/*"
