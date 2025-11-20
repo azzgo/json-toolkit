@@ -35,17 +35,20 @@ export function DialogComponent({
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent>
-        <DialogHeader>
+      <DialogContent className="max-h-[80vh] flex flex-col">
+        <DialogHeader className="flex-shrink-0">
           <DialogTitle>Typescript Type</DialogTitle>
-          <DialogDescription>
+        </DialogHeader>
+        <DialogDescription className="flex-1 min-h-0 flex">
+          <div className="max-h-full overflow-y-auto pr-2">
             <div
               ref={codeContainerRef}
               dangerouslySetInnerHTML={{ __html: tsType }}
+              className="whitespace-pre-wrap"
             />
-          </DialogDescription>
-        </DialogHeader>
-        <div className="flex justify-end space-x-2">
+          </div>
+        </DialogDescription>
+        <div className="flex justify-end space-x-2 flex-shrink-0 mt-4">
           <Button className="cursor-pointer" onClick={handleCopyToClipboard}>Copy</Button>
           <Button className="cursor-pointer" variant="outline" onClick={() => onOpenChange(false)}>Close</Button>
         </div>
