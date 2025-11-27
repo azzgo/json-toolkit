@@ -21,16 +21,36 @@ export function DialogComponent({
   onOpenChange,
 }: DialogComponentProps) {
   const codeContainerRef = useRef<HTMLDivElement>(null);
-  const handleCopyToClipboard = () => {
-    const el = document.createElement("textarea");
-    el.value = codeContainerRef.current?.innerText || "";
-    document.body.appendChild(el);
-    el.select();
-    document.execCommand("copy");
-    document.body.removeChild(el);
-    toast("Copied to clipboard", {
-      description: "The TypeScript type has been copied to your clipboard.",
-    });
+  const handleCopyToClipboard = async () => {
+    try {
+      const textToCopy = codeContainerRef.current?.innerText || "";
+      
+      if (navigator.clipboard && window.isSecureContext) {
+        // Use modern Clipboard API
+        await navigator.clipboard.writeText(textToCopy);
+      } else {
+        // Fallback for older browsers or non-secure contexts
+        const el = document.createElement("textarea");
+        el.value = textToCopy;
+        el.style.position = "fixed";
+        el.style.left = "-999999px";
+        el.style.top = "-999999px";
+        document.body.appendChild(el);
+        el.focus();
+        el.select();
+        document.execCommand("copy");
+        document.body.removeChild(el);
+      }
+      
+      toast("Copied to clipboard", {
+        description: "The TypeScript type has been copied to your clipboard.",
+      });
+    } catch (err) {
+      console.error("Failed to copy text: ", err);
+      toast.error("Copy failed", {
+        description: "Unable to copy to clipboard. Please try selecting and copying manually.",
+      });
+    }
   };
 
   return (
