@@ -1,4 +1,4 @@
-import { ChevronsLeftRight, ChevronsRightLeft, FileText, GitMerge } from "lucide-react";
+import { ChevronsLeftRight, ChevronsRightLeft, FileText, GitMerge, Key } from "lucide-react";
 import { Link } from "react-router";
 
 import {
@@ -25,6 +25,11 @@ const AppSidebar = () => {
       title: "Diff",
       url: "/diff",
       icon: GitMerge,
+    },
+    {
+      title: "JWT Decoder",
+      url: "/jwt",
+      icon: Key,
     },
   ];
 

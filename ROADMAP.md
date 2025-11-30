@@ -14,10 +14,15 @@
 ## Phase 2: 开发者实用工具箱 (Dev Utilities)
 解决 JSON 数据相关的周边痛点，增加工具粘性。
 
-- [ ] **JWT 解码器 (JWT Decoder)**
-  - [ ] 新增独立 Tab 或工具栏入口。
-  - [ ] 输入 JWT 字符串，展示 Header 和 Payload 的 JSON 结构。
-  - [ ] 解析并格式化显示 `exp`, `iat` 等时间戳字段。
+- [x] **JWT 解码器 (JWT Decoder)** ✅ *已完成*
+  - [x] 新增独立 Tab 或工具栏入口。
+  - [x] 输入 JWT 字符串，展示 Header 和 Payload 的 JSON 结构。
+  - [x] 解析并格式化显示 `exp`, `iat` 等时间戳字段。
+  - [x] **JWT 签名验证 (Signature Verification)** 🆕
+    - [x] 支持 HMAC 算法 (HS256, HS384, HS512)
+    - [x] 安全的密钥输入和实时验证反馈
+    - [x] 客户端签名验证，确保数据安全
+    - [x] 验证状态指示器和详细错误信息
 - [ ] **URL Params 转换器**
   - [ ] **URL -> JSON**: 将 URL Query String 解析为 JSON 对象。
   - [ ] **JSON -> URL**: 将 JSON 对象序列化为 Query String。

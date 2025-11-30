@@ -3,6 +3,7 @@ import JsonEditor from "./pages/JsonEditor";
 import { Toaster } from "./components/ui/sonner";
 import Layout from "./components/layout";
 import JsonDiff from "./pages/DiffPage";
+import JwtDecoder from "./pages/JwtDecoder";
 
 
 function App() {
@@ -12,6 +13,7 @@ function App() {
         <Routes>
           <Route path="/" element={<JsonEditor />} />
           <Route path="/diff" element={<JsonDiff />} />
+          <Route path="/jwt" element={<JwtDecoder />} />
         </Routes>
         <Toaster position="top-right" />
       </Layout>
