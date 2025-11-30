@@ -1,5 +1,21 @@
 ## ADDED Requirements
 
+### Requirement: 完整 URL 自动解析和查询参数提取
+系统应当(SHALL)自动检测完整 URL 输入并提取查询参数部分进行转换。
+
+#### Scenario: 粘贴完整 URL 自动提取查询参数
+- **当** 用户粘贴完整 URL "https://api.example.com/users?name=John&age=30&active=true"
+- **那么** 系统自动识别并提取查询字符串 "name=John&age=30&active=true"
+- **并且** 自动转换为 JSON 对象 `{"name": "John", "age": "30", "active": "true"}`
+
+#### Scenario: 支持各种 URL 格式
+- **当** 用户输入不同格式的 URL（带或不带协议，带或不带域名）
+- **那么** 系统正确识别并提取查询参数
+- **例如**: 
+  - "www.example.com/page?param=value" 
+  - "/api/data?filter=active&sort=desc"
+  - "https://subdomain.example.com:8080/path?complex=param"
+
 ### Requirement: URL 查询字符串到 JSON 转换
 系统应当(SHALL)解析 URL 查询字符串并将其转换为具有适当类型处理的结构化 JSON 对象。
 
@@ -81,3 +97,28 @@
 #### Scenario: 格式示例和帮助
 - **当** 用户需要支持格式的指导
 - **那么** 系统提供清晰的 URL 参数格式示例和对应的 JSON 结构
+
+### Requirement: JSON 编辑器和语法高亮增强
+系统应当(SHALL)提供专业的JSON编辑和显示体验，区分可编辑和只读场景。
+
+#### Scenario: JSON 编辑器用于可编辑场景
+- **当** 用户需要编辑或输入 JSON 数据
+- **那么** 系统提供带有语法高亮、错误检测和自动完成的专业 JSON 编辑器
+- **并且** 编辑器支持格式化、折叠和验证功能
+- **并且** 编辑器采用紧凑布局，无多余留白，优化屏幕空间使用
+
+#### Scenario: 语法高亮用于只读显示
+- **当** 系统显示解析后的 JSON 数据或示例
+- **那么** 系统使用语法高亮来增强可读性
+- **并且** 高亮显示包括键、字符串、数字、布尔值和特殊字符的不同着色
+
+#### Scenario: 编辑模式切换
+- **当** 用户需要在编辑和预览模式之间切换
+- **那么** 系统提供清晰的模式切换选项
+- **并且** 默认使用预览模式（语法高亮显示）提供更好的阅读体验
+- **并且** 保持数据一致性和用户体验连续性
+
+#### Scenario: JSON 验证和错误提示
+- **当** 用户输入无效的 JSON 格式
+- **那么** 编辑器实时显示错误位置和具体错误信息
+- **并且** 提供修复建议和格式化选项

@@ -4,6 +4,7 @@ import { Toaster } from "./components/ui/sonner";
 import Layout from "./components/layout";
 import JsonDiff from "./pages/DiffPage";
 import JwtDecoder from "./pages/JwtDecoder";
+import UrlParamsConverter from "./pages/UrlParamsConverter";
 
 
 function App() {
@@ -14,6 +15,7 @@ function App() {
           <Route path="/" element={<JsonEditor />} />
           <Route path="/diff" element={<JsonDiff />} />
           <Route path="/jwt" element={<JwtDecoder />} />
+          <Route path="/url-params" element={<UrlParamsConverter />} />
         </Routes>
         <Toaster position="top-right" />
       </Layout>

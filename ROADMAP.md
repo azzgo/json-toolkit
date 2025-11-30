@@ -23,9 +23,19 @@
     - [x] 安全的密钥输入和实时验证反馈
     - [x] 客户端签名验证，确保数据安全
     - [x] 验证状态指示器和详细错误信息
-- [ ] **URL Params 转换器**
-  - [ ] **URL -> JSON**: 将 URL Query String 解析为 JSON 对象。
-  - [ ] **JSON -> URL**: 将 JSON 对象序列化为 Query String。
+- [x] **URL Params 转换器** ✅ *已完成*
+  - [x] **URL -> JSON**: 将 URL Query String 解析为 JSON 对象。
+  - [x] **JSON -> URL**: 将 JSON 对象序列化为 Query String。
+  - [x] **智能URL解析 (Smart URL Parsing)** 🆕
+    - [x] 支持完整URL粘贴，自动提取查询参数部分
+    - [x] 处理各种URL格式（带/不带协议、域名、端口）
+    - [x] 支持嵌套对象记法 (user[name]=John) 和数组参数
+  - [x] **专业JSON编辑体验 (Enhanced JSON Editing)** 🆕
+    - [x] 集成 vanilla-jsoneditor 提供完整编辑功能
+    - [x] highlight.js 语法高亮显示
+    - [x] 编辑/预览模式切换，默认预览模式优化体验
+    - [x] 实时JSON验证、格式化和错误提示
+    - [x] 紧凑布局设计，优化屏幕空间利用
 
 ## Phase 3: 浏览器深度集成 (Browser Integration)
 利用扩展特性，打通网页内容到工具的路径。

@@ -1,4 +1,4 @@
-import { ChevronsLeftRight, ChevronsRightLeft, FileText, GitMerge, Key } from "lucide-react";
+import { ChevronsLeftRight, ChevronsRightLeft, FileText, GitMerge, Key, Link2 } from "lucide-react";
 import { Link } from "react-router";
 
 import {
@@ -30,6 +30,11 @@ const AppSidebar = () => {
       title: "JWT Decoder",
       url: "/jwt",
       icon: Key,
+    },
+    {
+      title: "URL Params",
+      url: "/url-params",
+      icon: Link2,
     },
   ];
 
