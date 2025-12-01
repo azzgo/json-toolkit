@@ -6,6 +6,9 @@ on:
       - 'v*'
   workflow_dispatch:
 
+permissions:
+  contents: write  # Required for creating releases and uploading assets
+
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -58,28 +61,49 @@ jobs:
             echo "VERSION=dev-$(date +%Y%m%d-%H%M%S)" >> $GITHUB_OUTPUT
           fi
           
-      - name: Find extension files
-        id: find_files
+      - name: Prepare extension files for release
         run: |
-          # Find the actual extension zip files
-          CHROME_ZIP=$(find packages/extension/.output -name "*chrome*.zip" | head -1)
-          FIREFOX_ZIP=$(find packages/extension/.output -name "*firefox*.zip" | head -1)
+          echo "Preparing extension files..."
           
-          echo "CHROME_ZIP=${CHROME_ZIP}" >> $GITHUB_OUTPUT
-          echo "FIREFOX_ZIP=${FIREFOX_ZIP}" >> $GITHUB_OUTPUT
-          
-          # List files for debugging
+          # List all files in extension output directory for debugging
           echo "Extension output directory contents:"
-          ls -la packages/extension/.output/ || echo "No .output directory found"
+          ls -la packages/extension/.output/
+          
+          # Find and rename extension zip files
+          CHROME_ZIP=$(find packages/extension/.output -name "*chrome*.zip" | head -1)
+          FIREFOX_ZIP=$(find packages/extension/.output -name "*firefox*.zip" -not -name "*sources*" | head -1)
+          
+          if [ -n "$CHROME_ZIP" ] && [ -f "$CHROME_ZIP" ]; then
+            cp "$CHROME_ZIP" "./json-toolkit-chrome.zip"
+            echo "✓ Chrome extension: $(basename "$CHROME_ZIP") → json-toolkit-chrome.zip"
+          else
+            echo "❌ Chrome extension zip not found"
+            exit 1
+          fi
+          
+          if [ -n "$FIREFOX_ZIP" ] && [ -f "$FIREFOX_ZIP" ]; then
+            cp "$FIREFOX_ZIP" "./json-toolkit-firefox.zip"
+            echo "✓ Firefox extension: $(basename "$FIREFOX_ZIP") → json-toolkit-firefox.zip"
+          else
+            echo "❌ Firefox extension zip not found"
+            exit 1
+          fi
+          
+          # Verify web toolkit archive exists
+          if [ ! -f "json-toolkit-web.tar.gz" ]; then
+            echo "❌ Web toolkit archive not found"
+            exit 1
+          fi
+          
+          echo "✓ All files prepared for release"
           
       - name: Create GitHub Release
         id: create_release
-        uses: actions/create-release@v1
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        uses: softprops/action-gh-release@v2
+        if: github.ref_type == 'tag'
         with:
           tag_name: ${{ steps.get_version.outputs.VERSION }}
-          release_name: JSON Toolkit ${{ steps.get_version.outputs.VERSION }}
+          name: JSON Toolkit ${{ steps.get_version.outputs.VERSION }}
           draft: true
           prerelease: false
           body: |
@@ -123,45 +147,8 @@ jobs:
             ---
             
             **完整更新日志和技术细节请查看项目 README**
-            
-      - name: Upload Chrome Extension
-        if: steps.find_files.outputs.CHROME_ZIP != ''
-        uses: actions/upload-release-asset@v1
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        with:
-          upload_url: ${{ steps.create_release.outputs.upload_url }}
-          asset_path: ${{ steps.find_files.outputs.CHROME_ZIP }}
-          asset_name: json-toolkit-chrome.zip
-          asset_content_type: application/zip
-          
-      - name: Upload Firefox Extension
-        if: steps.find_files.outputs.FIREFOX_ZIP != ''
-        uses: actions/upload-release-asset@v1
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        with:
-          upload_url: ${{ steps.create_release.outputs.upload_url }}
-          asset_path: ${{ steps.find_files.outputs.FIREFOX_ZIP }}
-          asset_name: json-toolkit-firefox.zip
-          asset_content_type: application/zip
-          
-      - name: Upload Web Toolkit
-        uses: actions/upload-release-asset@v1
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        with:
-          upload_url: ${{ steps.create_release.outputs.upload_url }}
-          asset_path: ./json-toolkit-web.tar.gz
-          asset_name: json-toolkit-web.tar.gz
-          asset_content_type: application/gzip
-          
-      - name: Upload Build Artifacts
-        uses: actions/upload-artifact@v4
-        with:
-          name: build-artifacts
-          path: |
-            packages/toolkit/dist/
-            packages/extension/.output/
+          files: |
+            json-toolkit-chrome.zip
+            json-toolkit-firefox.zip
             json-toolkit-web.tar.gz
-          retention-days: 30
+
