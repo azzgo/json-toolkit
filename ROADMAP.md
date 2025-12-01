@@ -61,15 +61,39 @@
     - [x] 实时JSON验证、格式化和错误提示
     - [x] 紧凑布局设计，优化屏幕空间利用
 
-## Phase 3: 浏览器深度集成 (Browser Integration)
+## Phase 3: 浏览器深度集成 (Browser Integration) ✅ *已完成*
 利用扩展特性，打通网页内容到工具的路径。
 
-- [ ] **右键菜单集成 (Context Menu)**
-  - [ ] 在网页选中文本后，右键菜单显示 "Open in JSON Toolkit"。
-  - [ ] 将选中内容传递至扩展页面。
-- [ ] **智能容错与修复 (JSON Repair)**
-  - [ ] 针对右键选中的非标准 JSON (如 JS Object 字面量、缺失引号、多余逗号) 进行自动修复。
-  - [ ] 尝试使用 `json5` 或 `json-repair` 类库进行预处理。
+- [x] **右键菜单集成 (Context Menu)** ✅ *已完成*
+  - [x] 在网页选中文本后，右键菜单显示 "在 JSON Toolkit 中打开"
+  - [x] 将选中内容传递至扩展页面
+  - [x] **扩展权限配置 (Extension Permissions)** 🆕
+    - [x] 添加 contextMenus 和 activeTab 权限到扩展清单
+    - [x] 实现后台脚本中的上下文菜单创建和点击处理
+    - [x] 创建内容脚本用于捕获选定文本和智能内容检测
+  - [x] **扩展-工具包通信协议 (Extension-Toolkit Communication)** 🆕
+    - [x] 设计基于URL参数的简单通信协议
+    - [x] 实现从上下文菜单到工具包的无缝数据传递
+    - [x] 自动打开/聚焦工具包标签页并加载选中内容
+    - [x] 内置错误处理和回退机制
+- [x] **智能容错与修复 (JSON Repair)** ✅ *已完成*
+  - [x] 针对右键选中的非标准 JSON (如 JS Object 字面量、缺失引号、多余逗号) 进行自动修复
+  - [x] 集成 `json5` 和 `jsonrepair` 类库进行预处理
+  - [x] **多策略修复引擎 (Multi-Strategy Repair Engine)** 🆕
+    - [x] jsonrepair 库自动修复
+    - [x] JSON5 解析支持 (JavaScript 对象字面量)
+    - [x] 手动修复策略：尾随逗号、不带引号的键、单引号转换
+    - [x] 智能内容检测：JSON vs 普通文本识别
+  - [x] **修复透明性和用户控制 (Repair Transparency & User Control)** 🆕
+    - [x] 置信度评分系统 (0-1.0)
+    - [x] 详细的修复建议列表和应用状态
+    - [x] 可视化修复建议卡片，支持接受/拒绝操作
+    - [x] 高置信度修复 (>80%) 自动应用，低置信度显示建议
+    - [x] Toast 通知系统用于修复操作反馈
+  - [x] **安全和隐私保护 (Security & Privacy)** 🆕
+    - [x] 所有数据处理在客户端本地进行
+    - [x] 无持久存储，仅通过URL参数传递数据
+    - [x] 清晰的权限声明和透明的权限使用
 
 ## Phase 4: 数据模拟 (Mocking)
 反向生产力工具，辅助前端开发与测试。

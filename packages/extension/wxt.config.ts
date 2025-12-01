@@ -1,5 +1,4 @@
 import { defineConfig } from "wxt";
-import tailwindcss from "@tailwindcss/vite";
 import packageJson from "./package.json";
 
 
@@ -18,5 +17,6 @@ export default defineConfig({
     content_security_policy: {
       extension_pages: "script-src 'self'; object-src 'self'",
     },
+    permissions: ["contextMenus", "activeTab"],
   },
 });
