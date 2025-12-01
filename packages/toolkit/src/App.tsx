@@ -6,6 +6,7 @@ import JsonDiff from "./pages/DiffPage";
 import JwtDecoder from "./pages/JwtDecoder";
 import UrlParamsConverter from "./pages/UrlParamsConverter";
 import { MockDataGenerator } from "./pages/MockDataGenerator";
+import CodeGenerationPage from "./pages/CodeGenerationPage";
 
 
 function App() {
@@ -14,6 +15,7 @@ function App() {
       <Layout>
         <Routes>
           <Route path="/" element={<JsonEditor />} />
+          <Route path="/code-generation" element={<CodeGenerationPage />} />
           <Route path="/diff" element={<JsonDiff />} />
           <Route path="/jwt" element={<JwtDecoder />} />
           <Route path="/url-params" element={<UrlParamsConverter />} />

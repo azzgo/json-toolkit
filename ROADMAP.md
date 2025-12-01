@@ -3,9 +3,22 @@
 ## Phase 1: 格式转换与多语言支持 (Format & Code Gen)
 扩展 JSON 的输入输出边界，使其成为数据流转的中心。
 
-- [ ] **多语言类型生成 (Code Generation)**
-  - [ ] 集成 `quicktype-core` 或类似库。
-  - [ ] 支持除 TypeScript 外的主流语言：Go, Java, Python (Pydantic), Rust, Swift, C#。
+- [x] **多语言类型生成 (Code Generation)** ✅ *已完成*
+  - [x] 集成 `quicktype-core` 库，支持强大的代码生成能力
+  - [x] 支持7种主流语言：TypeScript, Go, Java, Python (Pydantic), Rust, Swift, C#
+  - [x] **专业JSON编辑体验 (Professional JSON Editor)** 🆕
+    - [x] 完整替换基础textarea为vanilla-jsoneditor
+    - [x] 语法高亮、行号、可折叠JSON对象和数组
+    - [x] 文本/树状/表格三种编辑模式
+    - [x] 实时JSON验证和错误提示
+  - [x] **清理优化代码生成 (Clean Code Generation)** 🆕
+    - [x] 自动移除序列化/反序列化样板代码
+    - [x] 生成纯类型定义，代码更简洁
+    - [x] 支持一键复制和下载生成的代码
+  - [x] **多语言同时生成 (Batch Generation)** 🆕
+    - [x] 一键生成所有7种语言的类型定义
+    - [x] 实时状态反馈和成功通知
+    - [x] 标签页切换查看不同语言结果
 - [ ] **异构格式互转**
   - [ ] **JSON <-> YAML**: 方便处理 K8s/Docker Compose 等配置。
   - [ ] **JSON <-> XML**: 兼容老旧系统数据。
@@ -14,6 +27,17 @@
 ## Phase 2: 开发者实用工具箱 (Dev Utilities)
 解决 JSON 数据相关的周边痛点，增加工具粘性。
 
+- [x] **核心JSON编辑器 (JSON Editor)** ✅ *已完成*
+  - [x] **统一页面设计 (Consistent Page Design)** 🆕
+    - [x] 添加专业标题栏：图标 + "JSON Editor" 标题
+    - [x] 清晰的功能描述："Edit, format, and validate JSON with syntax highlighting and tree view"
+    - [x] 与其他页面保持一致的布局风格
+  - [x] **专业编辑体验 (Professional Editing)** 🆕
+    - [x] vanilla-jsoneditor 集成，提供完整编辑功能
+    - [x] 文本模式：语法高亮、行号、实时验证
+    - [x] 树状模式：层次化显示、可展开折叠节点
+    - [x] 表格模式：适合数组数据的编辑
+    - [x] 丰富的编辑工具：格式化、压缩、排序、搜索、撤销重做
 - [x] **JWT 解码器 (JWT Decoder)** ✅ *已完成*
   - [x] 新增独立 Tab 或工具栏入口。
   - [x] 输入 JWT 字符串，展示 Header 和 Payload 的 JSON 结构。

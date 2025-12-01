@@ -7,6 +7,9 @@ export function cn(...inputs: ClassValue[]) {
 }
 
 export function parseJSON(json: string) {
+  if (!json || json.trim() === '') {
+    return null;
+  }
   try {
     return JSON.parse(json);
   } catch (error) {
@@ -17,10 +20,13 @@ export function parseJSON(json: string) {
 
 export const getEditorContentJson = (content: Content): unknown | undefined => {
   let schema;
-  if ((content as JSONContent).json) {
+  if ((content as JSONContent).json !== undefined) {
     schema = (content as JSONContent).json;
   } else if ((content as TextContent).text) {
-    schema = parseJSON((content as TextContent).text);
+    const text = (content as TextContent).text.trim();
+    if (text) {
+      schema = parseJSON(text);
+    }
   }
   return schema;
 };

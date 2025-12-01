@@ -1,4 +1,4 @@
-import { ChevronsLeftRight, ChevronsRightLeft, FileText, GitMerge, Key, Link2, Database } from "lucide-react";
+import { ChevronsLeftRight, ChevronsRightLeft, FileText, GitMerge, Key, Link2, Database, Code2 } from "lucide-react";
 import { Link } from "react-router";
 
 import {
@@ -20,6 +20,11 @@ const AppSidebar = () => {
       title: "Editor",
       url: "/",
       icon: FileText,
+    },
+    {
+      title: "Code Generation",
+      url: "/code-generation",
+      icon: Code2,
     },
     {
       title: "Diff",
