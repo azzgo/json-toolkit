@@ -1,4 +1,4 @@
-import { defineConfig } from "wxt";
+import { ConfigEnv, defineConfig } from "wxt";
 import packageJson from "./package.json";
 
 // 将 npm 版本号转换为 Chrome 插件支持的格式
@@ -18,10 +18,8 @@ function toChromeVersion(npmVersion: string): string {
   return [major, minor, patch, build].join(".");
 }
 
-// See https://wxt.dev/api/config.html
-export default defineConfig({
-  modules: ["@wxt-dev/module-react"],
-  manifest: {
+function genManifest(env: ConfigEnv) {
+  const manifest = {
     name: "JSON Toolkit",
     version: toChromeVersion(packageJson.version),
     action: { default_title: "JSON Toolkit" },
@@ -34,13 +32,25 @@ export default defineConfig({
       extension_pages: "script-src 'self'; object-src 'self'",
     },
     permissions: ["contextMenus", "activeTab"],
-    browser_specific_settings: {
+  };
+
+  if (env.browser === "firefox") {
+    (manifest as any).browser_specific_settings = {
       gecko: {
+        id: "{4bc1e4d2-d8ee-4998-8af8-3b425537e664}",
+        strict_min_version: "102.0",
         data_collection_permissions: {
           required: ["none"],
         },
-      } as any,
-    },
-  },
-});
+      },
+    };
+  }
 
+  return manifest;
+}
+
+// See https://wxt.dev/api/config.html
+export default defineConfig({
+  modules: ["@wxt-dev/module-react"],
+  manifest: genManifest,
+});
