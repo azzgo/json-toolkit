@@ -2,7 +2,7 @@
 
 <div align="center">
 
-![JSON Toolkit](.assets/icon.png)
+<img style="width:64px" alt="JSON Toolkit" src=".assets/icon.png" />
 
 **强大的 JSON 编辑器和工具集合，让 JSON 处理变得简单高效**
 
