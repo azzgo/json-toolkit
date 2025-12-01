@@ -34,5 +34,13 @@ export default defineConfig({
       extension_pages: "script-src 'self'; object-src 'self'",
     },
     permissions: ["contextMenus", "activeTab"],
+    browser_specific_settings: {
+      gecko: {
+        data_collection_permissions: {
+          required: ["none"],
+        },
+      } as any,
+    },
   },
 });
+
