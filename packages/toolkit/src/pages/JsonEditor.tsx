@@ -44,7 +44,7 @@ function JsonEditor() {
 
       {/* JSON Editor */}
       <div className="flex-1 flex flex-col min-h-0">
-        <div className="flex-1 rounded-lg border bg-card" ref={editorDomRef}></div>
+        <div className="flex-1 border bg-card" ref={editorDomRef}></div>
       </div>
     </div>
   );

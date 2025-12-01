@@ -3,48 +3,48 @@
 ## Phase 1: 核心主题系统重构 (优先级: 高)
 
 ### 1.1 更新CSS变量定义
-- [ ] 修改 `packages/toolkit/src/index.css` 中的根级CSS变量
-- [ ] 将当前温暖色调替换为现代中性色彩
-- [ ] 实现基于OKLCH色彩空间的新色彩系统
-- [ ] 确保深色模式变量正确映射
-- [ ] 测试所有颜色变量的对比度符合WCAG AA标准
+- [x] 修改 `packages/toolkit/src/index.css` 中的根级CSS变量
+- [x] 将当前温暖色调替换为现代中性色彩
+- [x] 实现基于OKLCH色彩空间的新色彩系统
+- [x] 确保深色模式变量正确映射
+- [x] 测试所有颜色变量的对比度符合WCAG AA标准
 
 ### 1.2 字体系统现代化
-- [ ] 更新CSS中的字体栈定义
-- [ ] 为UI元素设置现代无衬线字体 (Inter, system-ui)
-- [ ] 为代码区域强制使用现代等宽字体 (JetBrains Mono, Fira Code)
-- [ ] 调整代码区域行高至最小1.5
-- [ ] 实现JSON键值的字重区分 (bold键名, normal值)
+- [x] 更新CSS中的字体栈定义
+- [x] 为UI元素设置现代无衬线字体 (Inter, system-ui)
+- [x] 为代码区域强制使用现代等宽字体 (JetBrains Mono, Fira Code)
+- [x] 调整代码区域行高至最小1.5
+- [x] 实现JSON键值的字重区分 (bold键名, normal值)
 
 ### 1.3 JSON编辑器主题集成
-- [ ] 更新 `--jse-*` CSS变量以匹配新主题
-- [ ] 调整JSON语法高亮颜色 (键名、字符串、数字、布尔值、null)
-- [ ] 确保编辑器背景与主题背景一致
-- [ ] 更新编辑器边框为微妙灰色
-- [ ] 测试搜索高亮和选择状态的视觉效果
+- [x] 更新 `--jse-*` CSS变量以匹配新主题
+- [x] 调整JSON语法高亮颜色 (键名、字符串、数字、布尔值、null)
+- [x] 确保编辑器背景与主题背景一致
+- [x] 更新编辑器边框为微妙灰色
+- [x] 测试搜索高亮和选择状态的视觉效果
 
 ## Phase 2: 组件样式现代化 (优先级: 高)
 
 ### 2.1 按钮系统重构
-- [ ] 更新 `packages/toolkit/src/components/ui/button.tsx`
-- [ ] 实现Primary/Secondary/Ghost/Icon按钮层次
-- [ ] 移除次要按钮的实色背景
-- [ ] 确保仅主要CTA使用实色背景
-- [ ] 添加现代化的悬停和激活状态
+- [x] 更新 `packages/toolkit/src/components/ui/button.tsx`
+- [x] 实现Primary/Secondary/Ghost/Icon按钮层次
+- [x] 移除次要按钮的实色背景
+- [x] 确保仅主要CTA使用实色背景
+- [x] 添加现代化的悬停和激活状态
 
 ### 2.2 侧边栏设计更新
-- [ ] 修改 `packages/toolkit/src/components/app-sidebar.tsx`
-- [ ] 实现窄边栏设计 (64px收起/240px展开)
-- [ ] 移除厚重背景色和边框
-- [ ] 更新菜单项的视觉样式
-- [ ] 优化图标和标签的间距
+- [x] 修改 `packages/toolkit/src/components/app-sidebar.tsx`
+- [x] 实现窄边栏设计 (64px收起/240px展开)
+- [x] 移除厚重背景色和边框
+- [x] 更新菜单项的视觉样式
+- [x] 优化图标和标签的间距
 
 ### 2.3 导航和标签现代化
-- [ ] 更新所有标签导航组件
-- [ ] 实现现代下划线指示器或药丸状设计
-- [ ] 移除传统实色背景标签
-- [ ] 确保激活状态清晰可见
-- [ ] 添加平滑的过渡动画
+- [x] 更新所有标签导航组件
+- [x] 实现现代下划线指示器或药丸状设计
+- [x] 移除传统实色背景标签
+- [x] 确保激活状态清晰可见
+- [x] 添加平滑的过渡动画
 
 ## Phase 3: 布局和专用组件 (优先级: 中)
 
@@ -56,18 +56,18 @@
 - [ ] 测试扩展popup模式下的布局适配
 
 ### 3.2 差异视图设计
-- [ ] 更新 `packages/toolkit/src/pages/DiffPage.tsx` 相关样式
-- [ ] 实现柔和背景色的差异指示 (删除红色、新增绿色)
-- [ ] 移除基于文字颜色的差异指示
-- [ ] 确保行号使用中性灰色
-- [ ] 测试长文本和深层嵌套的显示效果
+- [x] 更新 `packages/toolkit/src/pages/DiffPage.tsx` 相关样式
+- [x] 实现柔和背景色的差异指示 (删除红色、新增绿色)
+- [x] 移除基于文字颜色的差异指示
+- [x] 确保行号使用中性灰色
+- [x] 测试长文本和深层嵌套的显示效果
 
 ### 3.3 输入和表单组件
-- [ ] 更新 `packages/toolkit/src/components/ui/input.tsx`
-- [ ] 更新 `packages/toolkit/src/components/ui/select.tsx`
-- [ ] 实现现代化的输入框边框和背景
-- [ ] 添加焦点状态的主色调边框
-- [ ] 确保表单验证状态的视觉反馈
+- [x] 更新 `packages/toolkit/src/components/ui/input.tsx`
+- [x] 更新 `packages/toolkit/src/components/ui/select.tsx`
+- [x] 实现现代化的输入框边框和背景
+- [x] 添加焦点状态的主色调边框
+- [x] 确保表单验证状态的视觉反馈
 
 ## Phase 4: 页面特定样式 (优先级: 中)
 

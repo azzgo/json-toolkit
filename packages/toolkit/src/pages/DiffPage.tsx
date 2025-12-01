@@ -82,9 +82,9 @@ function JsonDiff() {
           ) => {
             const diffValue = leftDiffResultMap.get(path.join("."));
             if (diffValue === "delete") {
-              return "bg-red-100";
+              return "bg-red-50 dark:bg-red-950/30";
             } else if (diffValue === "update") {
-              return "bg-yellow-100";
+              return "bg-orange-50 dark:bg-orange-950/30";
             }
             return "";
           };
@@ -95,9 +95,9 @@ function JsonDiff() {
           ) => {
             const diffValue = rightDiffResultMap.get(path.join("."));
             if (diffValue === "add") {
-              return "bg-green-100";
+              return "bg-green-50 dark:bg-green-950/30";
             } else if (diffValue === "update") {
-              return "bg-yellow-100";
+              return "bg-orange-50 dark:bg-orange-950/30";
             }
             return "";
           };
@@ -143,8 +143,8 @@ function JsonDiff() {
         </Button>
       </div>
       <div className="flex gap-4 flex-1 items-stretch">
-        <div className="flex-1 rounded-lg border bg-card" ref={leftEditorDomRef}></div>
-        <div className="flex-1 rounded-lg border bg-card" ref={rightEditorDomRef}></div>
+        <div className="flex-1 border bg-card" ref={leftEditorDomRef}></div>
+        <div className="flex-1 border bg-card" ref={rightEditorDomRef}></div>
       </div>
     </div>
   );

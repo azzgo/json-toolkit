@@ -48,32 +48,32 @@
   --line-height: 1.6;
   --spacing-unit: 0.5rem;
 
-  /* Colors - Warm Theme */
-  --background: oklch(0.98 0.03 80);
-  --foreground: oklch(0.2 0.02 80);
+  /* Modern Color System - Clean Tech Theme */
+  --background: oklch(1 0 0);                    /* Pure white #FFFFFF */
+  --foreground: oklch(0.15 0.01 264);            /* Deep gray #1F2937 */
   
-  --card: oklch(1 0.01 75);
-  --card-foreground: oklch(0.2 0.02 80);
+  --card: oklch(0.98 0 0);                       /* Light gray #FAFAFA */
+  --card-foreground: oklch(0.15 0.01 264);       /* Deep gray #1F2937 */
   
-  --popover: oklch(0.98 0.02 75);
-  --popover-foreground: oklch(0.2 0.02 80);
+  --popover: oklch(1 0 0);                       /* Pure white #FFFFFF */
+  --popover-foreground: oklch(0.15 0.01 264);    /* Deep gray #1F2937 */
   
-  --primary: oklch(0.6 0.2 50);
-  --primary-foreground: oklch(0.98 0.02 75);
+  --primary: oklch(0.55 0.15 244);               /* Tech blue #007AFF */
+  --primary-foreground: oklch(1 0 0);            /* White text */
   
-  --secondary: oklch(0.95 0.03 80);
-  --secondary-foreground: oklch(0.3 0.02 80);
+  --secondary: oklch(0.96 0.002 264);            /* Light gray #F8FAFC - better contrast */
+  --secondary-foreground: oklch(0.15 0.01 264);  /* Deep gray #1F2937 */
   
-  --muted: oklch(0.96 0.02 75);
-  --muted-foreground: oklch(0.45 0.02 80);
+  --muted: oklch(0.96 0.005 264);                /* Muted gray #F3F4F6 */
+  --muted-foreground: oklch(0.45 0.01 264);      /* Neutral gray #6B7280 */
   
-  --accent: oklch(0.92 0.05 75);
-  --accent-foreground: oklch(0.3 0.02 80);
+  --accent: oklch(0.94 0.01 264);                /* Accent gray #F1F5F9 */
+  --accent-foreground: oklch(0.15 0.01 264);     /* Deep gray #1F2937 */
   
-  --destructive: oklch(0.7 0.2 30);
-  --border: oklch(0.85 0.02 75);
-  --input: oklch(0.9 0.02 75);
-  --ring: oklch(0.7 0.1 60);
+  --destructive: oklch(0.65 0.2 27);             /* Error red #EF4444 */
+  --border: oklch(0.45 0.02 264);                /* Very dark border for clear visibility #374151 */
+  --input: oklch(1 0 0);                         /* Pure white input background - clearly interactive */
+  --ring: oklch(0.55 0.15 244);                  /* Focus ring (primary) */
 
   /* Sidebar */
   --sidebar: var(--card);
@@ -85,69 +85,71 @@
   --sidebar-border: var(--border);
   --sidebar-ring: var(--ring);
 
-  /* JSON Editor Theme */
+  /* JSON Editor Theme - Modern */
   --jse-theme: light;
   --jse-theme-color: var(--primary);
   --jse-theme-color-highlight: var(--accent);
-  --jse-background-color: oklch(0.99 0.01 75);
+  --jse-background-color: oklch(1 0 0);                /* Pure white background */
   --jse-text-color: var(--foreground);
   --jse-main-border: var(--border);
-  --jse-selection-background-color: oklch(0.95 0.05 75);
-  --jse-selection-background-inactive-color: oklch(0.97 0.02 75);
-  --jse-hover-background-color: oklch(0.95 0.03 75 / 0.5);
+  --jse-selection-background-color: oklch(0.94 0.01 244);  /* Light blue selection */
+  --jse-selection-background-inactive-color: oklch(0.96 0.005 264);
+  --jse-hover-background-color: oklch(0.97 0.01 264 / 0.5);
   --jse-panel-background: var(--accent);
   --jse-panel-button-color-highlight: var(--accent-foreground);
   
-  /* JSON Syntax Colors - Warm Theme */
-  --jse-key-color: oklch(0.45 0.15 30);
-  --jse-value-color: oklch(0.3 0.1 80);
-  --jse-value-color-number: oklch(0.55 0.2 30);
-  --jse-value-color-boolean: oklch(0.6 0.18 60);
-  --jse-value-color-null: oklch(0.5 0.15 280);
-  --jse-value-color-string: oklch(0.45 0.18 120);
-  --jse-search-match-color: oklch(0.8 0.1 60);
+  /* JSON Syntax Colors - Modern Clean */
+  --jse-key-color: oklch(0.4 0.08 264);             /* Deep blue keys */
+  --jse-value-color: oklch(0.25 0.01 264);           /* Dark gray values */
+  --jse-value-color-number: oklch(0.5 0.12 27);      /* Orange-red numbers */
+  --jse-value-color-boolean: oklch(0.55 0.15 300);   /* Purple booleans */
+  --jse-value-color-null: oklch(0.5 0.08 180);       /* Cyan null */
+  --jse-value-color-string: oklch(0.45 0.1 162);     /* Green strings */
+  --jse-search-match-color: oklch(0.9 0.1 85);       /* Yellow highlight */
   
   --jse-tag-background: var(--accent);
   --jse-tag-color: var(--accent-foreground);
   --jse-input-background: var(--background);
   --jse-input-border: var(--border);
 
-  /* Font settings */
-  --jse-font-family: var(--font-family);
+  /* Font settings - Modern typography */
+  --font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
+  --font-family-mono: 'JetBrains Mono', 'Fira Code', 'Roboto Mono', monospace;
+  --jse-font-family: var(--font-family-mono);
   --jse-font-size: var(--font-size);
   --jse-font-size-mono: calc(var(--font-size) - 1px);
-  --jse-line-height: var(--line-height);
+  --jse-line-height: 1.5;                           /* Improved code readability */
   --jse-indent-size: calc(var(--spacing-unit) * 2);
   --jse-padding: var(--spacing-unit);
 }
 
 .dark {
-  /* Colors - Warm Dark Theme */
-  --background: oklch(0.2 0.02 60);
-  --foreground: oklch(0.95 0.02 75);
+  /* Modern Dark Theme - Clean Tech */
+  --background: oklch(0.12 0.01 264);              /* Dark background #0F172A */
+  --foreground: oklch(0.92 0.005 264);             /* Light text #F1F5F9 */
   
-  --card: oklch(0.25 0.02 65);
-  --card-foreground: oklch(0.95 0.02 75);
+  --card: oklch(0.16 0.01 264);                    /* Card background #1E293B */
+  --card-foreground: oklch(0.92 0.005 264);        /* Light text #F1F5F9 */
   
-  --popover: oklch(0.25 0.02 65);
-  --popover-foreground: oklch(0.95 0.02 75);
+  --popover: oklch(0.16 0.01 264);                 /* Popover background #1E293B */
+  --popover-foreground: oklch(0.92 0.005 264);     /* Light text #F1F5F9 */
   
-  --primary: oklch(0.7 0.15 50);
-  --primary-foreground: oklch(0.2 0.02 60);
+  --primary: oklch(0.65 0.12 244);                 /* Brighter blue for dark mode */
+  --primary-foreground: oklch(0.12 0.01 264);      /* Dark text on primary */
   
-  --secondary: oklch(0.3 0.02 70);
-  --secondary-foreground: oklch(0.9 0.02 75);
+  --secondary: oklch(0.2 0.01 264);                /* Secondary background #334155 */
+  --secondary-foreground: oklch(0.85 0.01 264);    /* Light secondary text */
   
-  --muted: oklch(0.3 0.02 65);
-  --muted-foreground: oklch(0.7 0.02 75);
+  --muted: oklch(0.2 0.01 264);                    /* Muted background #334155 */
+  --muted-foreground: oklch(0.65 0.01 264);        /* Muted text #94A3B8 */
   
-  --accent: oklch(0.35 0.05 70);
-  --accent-foreground: oklch(0.95 0.02 75);
+  --accent: oklch(0.24 0.01 264);                  /* Accent background #475569 */
+  --accent-foreground: oklch(0.92 0.005 264);      /* Light accent text */
   
-  --destructive: oklch(0.65 0.2 30);
-  --border: oklch(0.3 0.02 70);
-  --input: oklch(0.3 0.02 70);
-  --ring: oklch(0.6 0.1 60);
+  --destructive: oklch(0.7 0.18 27);               /* Brighter error red for dark mode */
+  --border: oklch(0.45 0.01 264);                  /* Much more visible dark border #64748B */
+  --input: oklch(0.08 0.005 264);                  /* Dark input background #0F172A - clearly distinct from background */
+  --ring: oklch(0.65 0.12 244);                    /* Focus ring (primary) */
 
   /* Sidebar - Inherits from main theme */
   --sidebar: var(--card);
@@ -159,27 +161,27 @@
   --sidebar-border: var(--border);
   --sidebar-ring: var(--ring);
 
-  /* JSON Editor Dark Theme */
+  /* JSON Editor Dark Theme - Modern */
   --jse-theme: dark;
   --jse-theme-color: var(--primary);
   --jse-theme-color-highlight: var(--accent);
-  --jse-background-color: oklch(0.22 0.02 65);
+  --jse-background-color: oklch(0.14 0.01 264);      /* Slightly lighter than background */
   --jse-text-color: var(--foreground);
   --jse-main-border: var(--border);
-  --jse-selection-background-color: oklch(0.3 0.03 70);
-  --jse-selection-background-inactive-color: oklch(0.28 0.02 65);
-  --jse-hover-background-color: oklch(0.3 0.02 70 / 0.5);
+  --jse-selection-background-color: oklch(0.24 0.02 244);  /* Blue selection in dark */
+  --jse-selection-background-inactive-color: oklch(0.18 0.01 264);
+  --jse-hover-background-color: oklch(0.22 0.01 264 / 0.5);
   --jse-panel-background: var(--accent);
   --jse-panel-button-color-highlight: var(--accent-foreground);
   
-  /* JSON Syntax Colors - Warm Dark */
-  --jse-key-color: oklch(0.8 0.1 60);
-  --jse-value-color: oklch(0.85 0.05 75);
-  --jse-value-color-number: oklch(0.75 0.15 30);
-  --jse-value-color-boolean: oklch(0.75 0.12 60);
-  --jse-value-color-null: oklch(0.7 0.1 280);
-  --jse-value-color-string: oklch(0.7 0.15 120);
-  --jse-search-match-color: oklch(0.7 0.15 60);
+  /* JSON Syntax Colors - Modern Dark */
+  --jse-key-color: oklch(0.75 0.08 244);           /* Light blue keys */
+  --jse-value-color: oklch(0.85 0.005 264);         /* Light gray values */
+  --jse-value-color-number: oklch(0.75 0.1 27);     /* Orange-red numbers */
+  --jse-value-color-boolean: oklch(0.75 0.12 300);  /* Purple booleans */
+  --jse-value-color-null: oklch(0.7 0.08 180);      /* Cyan null */
+  --jse-value-color-string: oklch(0.7 0.1 162);     /* Green strings */
+  --jse-search-match-color: oklch(0.7 0.12 85);     /* Yellow highlight */
   
   --jse-tag-background: var(--accent);
   --jse-tag-color: var(--accent-foreground);
@@ -193,6 +195,17 @@
   }
   body {
     @apply bg-background text-foreground;
+    font-family: var(--font-family);
+  }
+  
+  code, pre, .monospace {
+    font-family: var(--font-family-mono);
+    line-height: 1.5;
+  }
+  
+  /* Ensure JSON editor uses monospace with bold keys */
+  .jse-main .jse-key {
+    font-weight: 600;
   }
 }
 

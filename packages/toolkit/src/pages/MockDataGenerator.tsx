@@ -237,14 +237,12 @@ export const MockDataGenerator: React.FC = () => {
 
               <div className="space-y-2">
                 <label className="text-sm font-medium">JSON Structure</label>
-                <div className="border rounded-md">
-                  <JsonDisplayEditor
-                    value={inputJson}
-                    onChange={handleJsonChange}
-                    placeholder="Enter your JSON structure..."
-                    showModeToggle={true}
-                  />
-                </div>
+                <JsonDisplayEditor
+                  value={inputJson}
+                  onChange={handleJsonChange}
+                  placeholder="Enter your JSON structure..."
+                  showModeToggle={true}
+                />
               </div>
 
               <Button
