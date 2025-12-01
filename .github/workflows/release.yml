@@ -1,0 +1,167 @@
+name: Build and Release
+
+on:
+  push:
+    tags:
+      - 'v*'
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        
+      - name: Setup Bun
+        uses: oven-sh/setup-bun@v2
+        with:
+          bun-version: latest
+          
+      - name: Install dependencies
+        run: bun install
+        
+      - name: Build toolkit web version
+        run: bun run toolkit:build
+        
+      - name: Build toolkit for extension
+        run: bun run toolkit:build:extension
+        
+      - name: Build Chrome extension
+        run: bun run ext:build:chrome
+        
+      - name: Build Firefox extension
+        run: bun run ext:build:firefox
+        
+      - name: Create Chrome extension zip
+        run: |
+          cd packages/extension
+          bun run zip:chrome
+          
+      - name: Create Firefox extension zip
+        run: |
+          cd packages/extension
+          bun run zip:firefox
+          
+      - name: Create web toolkit archive
+        run: |
+          cd packages/toolkit/dist
+          tar -czf ../../../json-toolkit-web.tar.gz *
+          
+      - name: Get version from tag
+        id: get_version
+        run: |
+          if [[ $GITHUB_REF == refs/tags/* ]]; then
+            echo "VERSION=${GITHUB_REF#refs/tags/}" >> $GITHUB_OUTPUT
+          else
+            echo "VERSION=dev-$(date +%Y%m%d-%H%M%S)" >> $GITHUB_OUTPUT
+          fi
+          
+      - name: Find extension files
+        id: find_files
+        run: |
+          # Find the actual extension zip files
+          CHROME_ZIP=$(find packages/extension/.output -name "*chrome*.zip" | head -1)
+          FIREFOX_ZIP=$(find packages/extension/.output -name "*firefox*.zip" | head -1)
+          
+          echo "CHROME_ZIP=${CHROME_ZIP}" >> $GITHUB_OUTPUT
+          echo "FIREFOX_ZIP=${FIREFOX_ZIP}" >> $GITHUB_OUTPUT
+          
+          # List files for debugging
+          echo "Extension output directory contents:"
+          ls -la packages/extension/.output/ || echo "No .output directory found"
+          
+      - name: Create GitHub Release
+        id: create_release
+        uses: actions/create-release@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          tag_name: ${{ steps.get_version.outputs.VERSION }}
+          release_name: JSON Toolkit ${{ steps.get_version.outputs.VERSION }}
+          draft: true
+          prerelease: false
+          body: |
+            ## JSON Toolkit ${{ steps.get_version.outputs.VERSION }}
+            
+            ### 📦 下载说明
+            
+            - **Chrome 扩展**: 下载 `json-toolkit-chrome.zip`，解压后在 Chrome 扩展管理页面加载
+            - **Firefox 扩展**: 下载 `json-toolkit-firefox.zip`，解压后在 Firefox 插件管理页面安装
+            - **Web 版本**: 下载 `json-toolkit-web.tar.gz`，解压后部署到 Web 服务器
+            
+            ### ✨ 功能特点
+            
+            - 🔧 智能 JSON 编辑器 - 多视图模式，语法高亮，格式化工具
+            - 🔐 JWT 令牌解码器 - 完整解析，签名验证，到期时间检查
+            - ⚡ 代码生成器 - 多语言支持，类型安全，即时预览
+            - 🔄 JSON 差异对比 - 并排对比，高亮显示差异
+            - 🎲 智能 Mock 数据生成器 - 智能字段识别，丰富数据类型
+            - 🔧 URL 参数转换器 - 双向转换，编码处理
+            - 🌐 浏览器集成 - 右键上下文菜单，智能 JSON 修复
+            
+            ### 🚀 安装指南
+            
+            #### Chrome/Edge 安装
+            1. 下载 `json-toolkit-chrome.zip`
+            2. 打开 Chrome 扩展管理页面 (`chrome://extensions/`)
+            3. 开启右上角的 "开发者模式"
+            4. 点击 "加载已解压的扩展程序"，选择解压后的文件夹
+            
+            #### Firefox 安装
+            1. 下载 `json-toolkit-firefox.zip`
+            2. 打开 Firefox 插件管理页面 (`about:addons`)
+            3. 点击设置图标，选择 "从文件安装插件"
+            4. 选择下载的 `.zip` 文件
+            
+            #### Web 版本部署
+            1. 下载 `json-toolkit-web.tar.gz`
+            2. 解压到你的 Web 服务器目录
+            3. 访问 `index.html` 即可使用
+            
+            ---
+            
+            **完整更新日志和技术细节请查看项目 README**
+            
+      - name: Upload Chrome Extension
+        if: steps.find_files.outputs.CHROME_ZIP != ''
+        uses: actions/upload-release-asset@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          upload_url: ${{ steps.create_release.outputs.upload_url }}
+          asset_path: ${{ steps.find_files.outputs.CHROME_ZIP }}
+          asset_name: json-toolkit-chrome.zip
+          asset_content_type: application/zip
+          
+      - name: Upload Firefox Extension
+        if: steps.find_files.outputs.FIREFOX_ZIP != ''
+        uses: actions/upload-release-asset@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          upload_url: ${{ steps.create_release.outputs.upload_url }}
+          asset_path: ${{ steps.find_files.outputs.FIREFOX_ZIP }}
+          asset_name: json-toolkit-firefox.zip
+          asset_content_type: application/zip
+          
+      - name: Upload Web Toolkit
+        uses: actions/upload-release-asset@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          upload_url: ${{ steps.create_release.outputs.upload_url }}
+          asset_path: ./json-toolkit-web.tar.gz
+          asset_name: json-toolkit-web.tar.gz
+          asset_content_type: application/gzip
+          
+      - name: Upload Build Artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: build-artifacts
+          path: |
+            packages/toolkit/dist/
+            packages/extension/.output/
+            json-toolkit-web.tar.gz
+          retention-days: 30
