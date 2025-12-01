@@ -1,4 +1,4 @@
-import { ChevronsLeftRight, ChevronsRightLeft, FileText, GitMerge, Key, Link2 } from "lucide-react";
+import { ChevronsLeftRight, ChevronsRightLeft, FileText, GitMerge, Key, Link2, Database } from "lucide-react";
 import { Link } from "react-router";
 
 import {
@@ -35,6 +35,11 @@ const AppSidebar = () => {
       title: "URL Params",
       url: "/url-params",
       icon: Link2,
+    },
+    {
+      title: "Mock Data",
+      url: "/mock-data",
+      icon: Database,
     },
   ];
 

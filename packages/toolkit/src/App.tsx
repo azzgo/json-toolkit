@@ -5,6 +5,7 @@ import Layout from "./components/layout";
 import JsonDiff from "./pages/DiffPage";
 import JwtDecoder from "./pages/JwtDecoder";
 import UrlParamsConverter from "./pages/UrlParamsConverter";
+import { MockDataGenerator } from "./pages/MockDataGenerator";
 
 
 function App() {
@@ -16,6 +17,7 @@ function App() {
           <Route path="/diff" element={<JsonDiff />} />
           <Route path="/jwt" element={<JwtDecoder />} />
           <Route path="/url-params" element={<UrlParamsConverter />} />
+          <Route path="/mock-data" element={<MockDataGenerator />} />
         </Routes>
         <Toaster position="top-right" />
       </Layout>
