@@ -34,7 +34,7 @@ jobs:
       - name: Build Chrome extension
         run: bun run ext:build:chrome
         
-      - name: Build Firefox extension
+      - name: Build Firefox extension (MV3)
         run: bun run ext:build:firefox
         
       - name: Create Chrome extension zip

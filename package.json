@@ -2,7 +2,7 @@
   "name": "json-toolkit",
   "description": "manifest.json description",
   "private": true,
-  "version": "1.0.0-alpha.1",
+  "version": "1.0.0-alpha.2",
   "type": "module",
   "scripts": {
     "ext:dev": "bun --filter json-toolkit dev",
