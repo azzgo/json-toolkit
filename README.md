@@ -141,6 +141,11 @@ bun run toolkit:build:extension
 - **代码生成**: quicktype-core
 - **Mock 数据**: Faker.js
 
+
+## 🙏 致谢
+
+- 本项目图标由 [Ray.so](https://ray.so/) 生成
+
 ## 📄 许可证
 
 本项目采用 MIT 许可证，详见 [LICENSE](LICENSE) 文件。
