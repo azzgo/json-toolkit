@@ -1,5 +1,5 @@
 import { ChevronsLeftRight, ChevronsRightLeft, FileText, GitMerge, Key, Link2, Database, Code2 } from "lucide-react";
-import { Link } from "react-router";
+import { Link, useLocation } from "react-router";
 
 import {
   Sidebar,
@@ -15,6 +15,8 @@ import {
 } from "@/components/ui/sidebar";
 
 const AppSidebar = () => {
+  const location = useLocation();
+  
   const items = [
     {
       title: "Editor",
@@ -59,7 +61,7 @@ const AppSidebar = () => {
             <SidebarMenu>
               {items.map((item) => (
                 <SidebarMenuItem key={item.title}>
-                  <SidebarMenuButton asChild>
+                  <SidebarMenuButton asChild isActive={location.pathname === item.url}>
                     <Link to={{ pathname: item.url }}>
                       <item.icon />
                       <span>{item.title}</span>
