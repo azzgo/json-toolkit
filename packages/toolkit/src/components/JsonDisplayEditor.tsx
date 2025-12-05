@@ -295,7 +295,7 @@ export function JsonDisplayEditor({
       {/* JSON Editor */}
       <div 
         ref={editorDomRef}
-        className={cn("border rounded-md overflow-hidden [&_.jse-editor]:!m-0 [&_.jse-main]:!m-0", className)}
+        className={cn("border rounded-md overflow-auto [&_.jse-editor]:!m-0 [&_.jse-main]:!m-0", className)}
         style={{ maxHeight: "400px" }}
       />
       
