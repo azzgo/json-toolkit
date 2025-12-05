@@ -109,7 +109,12 @@ jobs:
           body: |
             ## JSON Toolkit ${{ steps.get_version.outputs.VERSION }}
             
-            ### 📦 下载说明
+            ### 🏪 应用商店 (推荐)
+            
+            - [**Chrome Web Store**](https://chromewebstore.google.com/detail/json-toolkit/pijknamcljeplklkhmpiakbaphmlhaig)
+            - [**Firefox Add-ons**](https://addons.mozilla.org/en-US/firefox/addon/json-toolkit/)
+            
+            ### 📦 离线包下载
             
             - **Chrome 扩展**: 下载 `json-toolkit-chrome.zip`，解压后在 Chrome 扩展管理页面加载
             - **Firefox 扩展**: 下载 `json-toolkit-firefox.zip`，解压后在 Firefox 插件管理页面安装
