@@ -65,6 +65,8 @@ JSON Toolkit is a fully featured JSON processing suite designed for developers a
 - **Encoding Handling**: Automatic handling of URL encoding and decoding
 - **Formatted Output**: Beautifully formatted results for easy reading
 
+![URL Params Converter](.assets/url-params-converter.png)
+
 ### 🌐 Browser Integration
 
 JSON Toolkit provides deep browser integration, allowing you to process JSON data seamlessly while browsing:

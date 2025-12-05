@@ -65,6 +65,8 @@ JSON Toolkit 是一个功能齐全的 JSON 处理工具套件，专为开发者�
 - **编码处理**: 自动处理 URL 编码和解码
 - **格式化输出**: 转换结果自动美化，易于阅读
 
+![URL参数转换器](.assets/url-params-converter.png)
+
 ### 🌐 浏览器集成
 
 JSON Toolkit 提供深度的浏览器集成，让您在浏览网页时能够无缝处理 JSON 数据：
