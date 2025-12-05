@@ -6,7 +6,8 @@ import {
 } from "vanilla-jsoneditor";
 import { diff } from "json-diff";
 import { Button } from "@/components/ui/button";
-import { ChevronsLeftRight } from "lucide-react";
+import { GitCompareArrows, ChevronsLeftRight } from "lucide-react";
+import { Separator } from "@/components/ui/separator";
 import { Editor } from "@/lib/types";
 import { toast } from "sonner";
 import {
@@ -127,24 +128,46 @@ function JsonDiff() {
   };
 
   return (
-    <div className="w-full flex-1 flex flex-col gap-4 p-4">
+    <div className="flex-1 flex flex-col gap-6 p-6 overflow-hidden">
+      {/* Header */}
+      <div className="flex items-center gap-3">
+        <GitCompareArrows className="size-6 text-primary" />
+        <div>
+          <h1 className="text-2xl font-bold">JSON Diff</h1>
+          <p className="text-sm text-muted-foreground">
+            Compare two JSON objects and visualize their differences
+          </p>
+        </div>
+      </div>
+
+      <Separator />
+
       <div className="flex items-center gap-2">
         <Button size="sm" onClick={showDiff} className="h-8 px-3 text-sm">
           Show Diff
         </Button>
-        <Button
-          size="sm"
-          variant="outline"
-          onClick={swapContent}
-          className="h-8 w-8 p-0"
-          aria-label="Swap content"
-        >
-          <ChevronsLeftRight className="size-4" />
-        </Button>
       </div>
-      <div className="flex gap-4 flex-1 items-stretch">
-        <div className="flex-1 border bg-card" ref={leftEditorDomRef}></div>
-        <div className="flex-1 border bg-card" ref={rightEditorDomRef}></div>
+      
+      {/* Editors Container */}
+      <div className="flex-1 flex flex-col min-h-0">
+        <div className="flex gap-4 flex-1 items-stretch min-h-0">
+          <div className="flex-1 border bg-card" ref={leftEditorDomRef}></div>
+          
+          {/* Swap button in the middle */}
+          <div className="flex flex-col justify-center">
+            <Button
+              size="sm"
+              variant="outline"
+              onClick={swapContent}
+              className="h-8 w-8 p-0"
+              aria-label="Swap content"
+            >
+              <ChevronsLeftRight className="size-4" />
+            </Button>
+          </div>
+          
+          <div className="flex-1 border bg-card" ref={rightEditorDomRef}></div>
+        </div>
       </div>
     </div>
   );
