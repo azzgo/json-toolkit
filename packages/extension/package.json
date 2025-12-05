@@ -2,7 +2,7 @@
   "name": "json-toolkit",
   "description": "manifest.json description",
   "private": true,
-  "version": "1.0.0-alpha.2",
+  "version": "1.0.1",
   "type": "module",
   "scripts": {
     "dev": "wxt",

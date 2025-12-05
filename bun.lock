@@ -6,7 +6,7 @@
     },
     "packages/extension": {
       "name": "json-toolkit",
-      "version": "1.0.0-alpha.2",
+      "version": "1.0.0",
       "dependencies": {
         "react": "^19.0.0",
         "react-dom": "^19.0.0",
@@ -21,7 +21,7 @@
     },
     "packages/toolkit": {
       "name": "toolkit",
-      "version": "1.0.0-alpha.2",
+      "version": "1.0.0",
       "dependencies": {
         "@faker-js/faker": "^10.1.0",
         "@radix-ui/react-dialog": "^1.1.7",
