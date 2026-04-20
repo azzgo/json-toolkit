@@ -1,11 +1,11 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState, type ChangeEvent } from "react";
 import {
   createJSONEditor,
 } from "vanilla-jsoneditor";
 import "highlight.js/styles/github.css";
 import { Editor } from "@/lib/types";
 import { Separator } from "@/components/ui/separator";
-import { FileCode2, AlertTriangle, CheckCircle } from "lucide-react";
+import { FileCode2, AlertTriangle, CheckCircle, Upload, Download } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { repairJson, JsonRepairResult } from "@/lib/json-repair";
@@ -14,6 +14,7 @@ import { toast } from "sonner";
 function JsonEditor() {
   const editorDomRef = useRef(null);
   const editorRef = useRef<Editor | null>(null);
+  const fileInputRef = useRef<HTMLInputElement | null>(null);
   const [repairResult, setRepairResult] = useState<JsonRepairResult | null>(null);
   const [showRepairSuggestions, setShowRepairSuggestions] = useState(false);
 
@@ -105,20 +106,101 @@ function JsonEditor() {
     setShowRepairSuggestions(false);
   };
 
+  const importFromFile = () => {
+    fileInputRef.current?.click();
+  };
+
+  const handleFileImport = async (event: ChangeEvent<HTMLInputElement>) => {
+    const file = event.target.files?.[0];
+    if (!file) return;
+
+    try {
+      const content = await file.text();
+      if (!content.trim()) {
+        toast.error("Selected file is empty");
+        return;
+      }
+
+      handleIncomingContent(content);
+      toast.success(`Imported ${file.name}`);
+    } catch (error) {
+      console.error("Failed to import file:", error);
+      toast.error("Failed to import file");
+    } finally {
+      event.target.value = "";
+    }
+  };
+
+  const getEditorTextContent = () => {
+    if (!editorRef.current) return null;
+
+    try {
+      const content = editorRef.current.get() as { text?: string; json?: unknown };
+      if (typeof content.text === "string") return content.text;
+      if (content.json !== undefined) return JSON.stringify(content.json);
+      return "";
+    } catch (error) {
+      console.error("Failed to get editor content:", error);
+      return null;
+    }
+  };
+
+  const exportAsJson = () => {
+    const content = getEditorTextContent();
+    if (content === null) {
+      toast.error("Failed to export JSON");
+      return;
+    }
+
+    if (!content.length) {
+      toast.error("No content to export");
+      return;
+    }
+
+    const blob = new Blob([content], { type: "application/json" });
+    const url = URL.createObjectURL(blob);
+    const anchor = document.createElement("a");
+    anchor.href = url;
+    anchor.download = "json-editor.json";
+    anchor.click();
+    URL.revokeObjectURL(url);
+    toast.success("JSON file downloaded");
+  };
+
   return (
     <div className="flex-1 flex flex-col gap-6 p-6 overflow-hidden">
       {/* Header */}
-      <div className="flex items-center gap-3">
-        <FileCode2 className="size-6 text-primary" />
-        <div>
-          <h1 className="text-2xl font-bold">JSON Editor</h1>
-          <p className="text-sm text-muted-foreground">
-            Edit, format, and validate JSON with syntax highlighting and tree view
-          </p>
+      <div className="flex items-center justify-between gap-3">
+        <div className="flex items-center gap-3">
+          <FileCode2 className="size-6 text-primary" />
+          <div>
+            <h1 className="text-2xl font-bold">JSON Editor</h1>
+            <p className="text-sm text-muted-foreground">
+              Edit, format, and validate JSON with syntax highlighting and tree view
+            </p>
+          </div>
+        </div>
+        <div className="flex items-center gap-2">
+          <Button variant="outline" size="sm" onClick={importFromFile}>
+            <Upload className="size-4 mr-2" />
+            Import from file
+          </Button>
+          <Button variant="outline" size="sm" onClick={exportAsJson}>
+            <Download className="size-4 mr-2" />
+            Export as JSON
+          </Button>
         </div>
       </div>
 
       <Separator />
+
+      <input
+        ref={fileInputRef}
+        type="file"
+        accept=".json,application/json,text/plain"
+        onChange={handleFileImport}
+        className="hidden"
+      />
 
       {/* JSON Repair Suggestions */}
       {showRepairSuggestions && repairResult && (
